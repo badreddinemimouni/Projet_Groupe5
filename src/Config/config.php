@@ -6,14 +6,14 @@ use PDO;
 
 class Config
 {
-    const DBNAME = "Projet";
+    const DBNAME = "Project";
     const DBHOST = 'localhost';
-    const DBUSER = 'root';
-    const DBPWD = 'root';
-    const ENTITY = 'Keha\Test\Entity\\';
-    const CONTROLLER = 'Keha\Test\Controller\\';
+    const DBUSER = 'badr';
+    const DBPWD = '';
+    const ENTITY = 'Tp\Projet\Entity\\';
+    const CONTROLLER = 'Tp\Projet\Controller\\';
     const DEFAULT_CONTROLLER = 'IndexController';
-    const DEFAULT_METHOD = 'index';
+    const DEFAULT_METHOD = 'index'; 
 }
 
 new Config();
