@@ -8,8 +8,8 @@ class Config
 {
     const DBNAME = "Project";
     const DBHOST = 'localhost';
-    const DBUSER = 'badr';
-    const DBPWD = '';
+    const DBUSER = 'root';
+    const DBPWD = 'root';
     const ENTITY = 'Tp\Projet\Entity\\';
     const CONTROLLER = 'Tp\Projet\Controller\\';
     const DEFAULT_CONTROLLER = 'IndexController';
