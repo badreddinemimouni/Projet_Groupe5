@@ -1,0 +1,15 @@
+{
+    "name": "tp/projet",
+    "autoload": {
+        "psr-4": {
+            "Tp\\Projet\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "BADHTW",
+            "email": "badr_mim@outlook.fr"
+        }
+    ],
+    "require": {}
+}
