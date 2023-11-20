@@ -73,8 +73,7 @@ class Model extends PDO
             $i++;
         }
         $sql = $sql . ')';
-        // echo $sql . '<br>';
-        // var_dump($preparedDatas);
+        var_dump($preparedDatas);
         $preparedRequest = $this->prepare($sql);
         $preparedRequest->execute($preparedDatas);
     }

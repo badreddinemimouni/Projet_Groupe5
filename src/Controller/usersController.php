@@ -1,30 +1,31 @@
 <?php
 
 namespace Tp\Project\Controller;
- 
+
 // Inclure les classes nécessaires
+
+use Tp\Project\App\AbstractController;
+use Tp\Project\Forms\registrationForm;
 use Tp\Project\App\Model;
-use Tp\Project\Entity\Users;
 
-class UsersController {
-    // Méthode pour inscrire un nouvel utilisateur
-
-    public function createUser(): void
-    {
-        $vars = [
-            'form' => loginForm::constructLoginForm('?controller=usersController&method=createUser', 'save'),
-        ];
-
-        $this->render('registration.php', $vars);
-    }
-
+class UsersController extends AbstractController
+{
+    // Méthode pour afficher formulaire de création d'utilisateur
 
     public function registerUser(): void
     {
+        $vars = [
+            'form' => registrationForm::form('?controller=usersController&method=createUser'),
+        ];
+        $this->render('registration.php', $vars);
+    }
+
+    // Méthode pour créer d'utilisateur
+    public function createUser(): void
+    {
         $datas = [
-            'nom' => $_GET['nom'],
-            'email' => $_GET['email'],
-            'password' => $_GET['password'],
+            'password' => $_POST['password'],
+            'login' => $_POST['username'],
         ];
         Model::getInstance()->save('users', $datas);
     }
@@ -32,14 +33,14 @@ class UsersController {
     // Méthode pour connecter un utilisateur
     public function loginUser(): void
     {
-        $results = Model::getInstance()->loginaUser('user');
+        $results = Model::getInstance()->loginUser('user');
         $this->render('users.php', ['users' => $results]);
     }
-    
+
     // Méthode pour récupérer les détails d'un utilisateur spécifique
     public function getUserDetails()
     {
-        $results = Model::getInstance()->getaUserDetails('user');
+        $results = Model::getInstance()->getUserDetails('user');
         $this->render('users.php', ['users' => $results]);
     }
 }
