@@ -9,7 +9,6 @@ class IndexController extends AbstractController
 {
     public function index($message = ''): void
     {
-        echo 'toto';
         $this->render('index.php', ['message' => $message]);
     }
 }
