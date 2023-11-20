@@ -1,9 +1,9 @@
 <?php
 
-namespace Keha\Test\App;
+namespace Tp\Project\App;
 
 use PDO;
-use Keha\Test\Config\Config;
+use Tp\Project\\Config\Config;
 
 class Model extends PDO
 {
