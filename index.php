@@ -1,4 +1,6 @@
 <?php
-include_once('/src/dwwm/UrlGenerator.php');
+include_once('vendor/autoload.php');
 
-generateUrl();
+use Tp\Project\App\Dispatcher;
+
+Dispatcher::Dispatch();
