@@ -3,7 +3,7 @@
 namespace Tp\Project\App;
 
 use PDO;
-use Tp\Project\\Config\Config;
+use Tp\Project\Config\Config;
 
 class Model extends PDO
 {
