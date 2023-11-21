@@ -1,6 +1,6 @@
 <main>
     <?php
-    foreach ($projectsData as $project) {
+    foreach ($projects as $project) {
         echo "Titre :" . $project->getName();
     }
     ?>
