@@ -49,6 +49,12 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
+    public function getPasswordByLogin($login){
+        $query = $this->query("SELECT password FROM users WHERE login = '$login' ");
+        return $query->fetch(PDO::FETCH_CLASS, Config::ENTITY);
+    }
+
+
     public function save($entity, $datas): void
     {
         $sql = 'INSERT into ' . $entity . ' (';
