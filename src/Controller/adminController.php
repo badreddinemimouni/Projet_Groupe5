@@ -7,19 +7,27 @@ use Tp\Project\App\Model;
 use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\AdminForm;
 
-class AdminController {
-
-    // Créer un nouvel utilisateur et l'ajouter au projet
-    public function createMember(Project $project, $username) {
-        $newMember = new User(/* Générez l'ID d'utilisateur de manière appropriée */ $username);
-        $project->addUser($newMember);
-        return $newMember;
+class AdminController extends AbstractController 
+{
+    
+    public function registerFormAdmin(): void
+    {
+        $vars = [
+            'form' => adminForm::form('?controller=adminController&method=assignUser'),
+        ];
+        $this->render('admin.php', $vars);
     }
- 
-    // Affecter un utilisateur existant au projet administré
-    public function assignMemberToProject(User $member, Project $project) {
-        $project->addUser($member);
+    // L'admin ajoute un user au projet
+    public function assignUser() {
+        $datas = [
+            'login' => $_POST['assign_user'],
+        ];
+        $validationMessage = adminForm::validateFormAdmin(); // appele la méthode statique validateFormProject de la classe projectForm.
+            if ($validationMessage === true) {
+                Model::getInstance()->save('admin', $datas);
+            } else {
+                echo $validationMessage . '<br><br>';
+            }
     }
-
-    // D'autres fonctionnalités spécifiques à l'administrateur peuvent être ajoutées ici
 }
+// L'admin ajoute et crée un user au projet et l'affecte à une tâche
