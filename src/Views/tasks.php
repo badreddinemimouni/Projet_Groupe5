@@ -1,7 +1,7 @@
 <main>
     <?php
-    foreach ($projectsData as $project) {
-        echo "Titre :" . $project->getName();
+    foreach ($tasks as $task) {
+        echo "Titre :" . $task->getTitle();
     }
     ?>
 </main>

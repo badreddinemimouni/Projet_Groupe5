@@ -15,6 +15,7 @@ class AbstractController
     public function render($view, $vars)
     {
         extract($vars);
+        // include_once(__DIR__ . '/../Views/header.php');
         include_once(__DIR__ . '/../Views/' . $view);
     }
 }
