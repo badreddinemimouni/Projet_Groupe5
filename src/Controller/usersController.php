@@ -24,10 +24,17 @@ class UsersController extends AbstractController
     public function createUser(): void
     {
         $datas = [
-            'password' => $_POST['password'],
+            'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
             'login' => $_POST['username'],
         ];
-        Model::getInstance()->save('users', $datas);
+        $validationMessages = registrationForm::validateFormRegistration();
+        if ($validationMessages === true) {
+            Model::getInstance()->save('users', $datas);
+        } else {
+            foreach ($validationMessages as $message) {
+                echo $message . '<br><br>';
+            }
+        }
     }
 
     // Méthode pour connecter un utilisateur

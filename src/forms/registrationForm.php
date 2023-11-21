@@ -28,12 +28,12 @@ class registrationForm
         if (isset($_POST['username']) && strlen($_POST['username']) < 5) {
             $error[] = 'Le nom d\'utilisateur doit comporter 5 caractères';
         }
-        if (isset($_POST['password']) && strlen($_POST['password']) < 5) {
+        if (isset($_POST['username']) && strlen($_POST['username']) < 5) {
             $error[] = 'Le mot de passe doit comporter 5 caractères';
         }
 
-        if (isset($_POST['password']) && isset($_POST['passwordverify']) && ($_POST['password'] !== $_POST['passwordverify'])) {
-            $error[] = 'Lse mots de passe doivent être identiques';
+        if (isset($_POST['password']) && isset($_POST['confirm-password']) && ($_POST['password'] !== $_POST['confirm-password'])) {
+            $error[] = 'Les mots de passe doivent être identiques';
         }
 
         if (count($error) > 0) {
