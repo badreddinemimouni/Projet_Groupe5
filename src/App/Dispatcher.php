@@ -1,14 +1,14 @@
 <?php
- 
+
 namespace Tp\Project\App;
- 
+
 use Tp\Project\Config\Config;
- 
- 
- 
+
+
+
 class Dispatcher
 {
- 
+
     public static function Dispatch()
     {
         $c = false;
@@ -30,4 +30,3 @@ class Dispatcher
         $controller->$m();
     }
 }
- 

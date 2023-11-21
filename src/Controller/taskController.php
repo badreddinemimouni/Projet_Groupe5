@@ -7,10 +7,11 @@ use Tp\Project\App\Model;
 use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\TaskForm;
 
-class TaskController extends AbstractController {
-    
+class TaskController extends AbstractController
+{
+
     // Méthode pour créer et ajouter une nouvelle tâche à un projet
-    
+
     public function registerFormTask(): void
     {
         $vars = [
@@ -19,9 +20,10 @@ class TaskController extends AbstractController {
         $this->render('task.php', $vars);
     }
 
-    public function createTask() {
+    public function createTask()
+    {
         $datas = [
-             // Récupérer les valeurs des champs distincts du formulaire
+            // Récupérer les valeurs des champs distincts du formulaire
             'title' => $_POST['task_title'],
             'description' => $_POST['task_description'],
             'id_priority' => $_POST['task_priority'],
@@ -38,34 +40,6 @@ class TaskController extends AbstractController {
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    public function addTask()
-    {
-        $datas = [
-            'title' => $_GET['title'],
-            'description' => $_GET['description'],
-            'priority' => $_GET['priorite'],
-            'status' => $_GET['status'],
-        ];
-        Model::getInstance()->save('task', $datas);
-    }
-
-
-
-
-
 
     // Méthode pour mettre à jour l'état d'une tâche
     public function updateTaskStatus()
@@ -83,11 +57,12 @@ class TaskController extends AbstractController {
         $id_task = $_GET['id'];
         Model::getInstance()->deleteById('livre', $id_task);
     }
-    
+
     // Méthode pour récupérer toutes les tâches associées à un projet
     public function displayTasksByProject()
     {
-        $results = Model::getInstance()->readAll('task');
-        $this->render('tasks.php', ['tasks' => $results]);
+        $projectId = $_GET['id'];
+        $tasks = Model::getInstance()->readByProjectId('task', $projectId);
+        $this->render('tasks.php', ['tasks' => $tasks]);
     }
 }
