@@ -1,63 +1,34 @@
 <?php
 
 namespace Tp\Project\Controller;
-
+ 
 // Inclure les classes nécessaires
 use Tp\Project\App\Model;
 use Tp\Project\Entity\Users;
 
 class UsersController {
-
-    public function getId() {
-        return $this->id;
-    }
-
-    public function getUsername() {
-        return $this->username;
-    }
-
     // Méthode pour inscrire un nouvel utilisateur
-    public function registerUser($username, $email, $password)
+    public function registerUser(): void
     {
-        // Vérifier si l'utilisateur existe déjà (par exemple, basé sur l'email)
-        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user) {
-            // L'utilisateur existe déjà
-            return "Cet email est déjà utilisé.";
-        } else {
-            // Insérer un nouvel utilisateur dans la base de données
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $this->conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-            $stmt->execute([$username, $email, $hashedPassword]);
-            return "Inscription réussie ! Connectez-vous maintenant.";
-        }
+        $datas = [
+            'nom' => $_GET['nom'],
+            'email' => $_GET['email'],
+            'password' => $_GET['password'],
+        ];
+        Model::getInstance()->save('users', $datas);
     }
 
     // Méthode pour connecter un utilisateur
-    public function loginUser($email, $password)
+    public function loginUser(): void
     {
-        // Récupérer les informations de l'utilisateur basées sur l'email
-        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user && password_verify($password, $user['password'])) {
-            // Le mot de passe est correct, utilisateur connecté
-            return "Connexion réussie ! Bienvenue, " . $user['username'] . "!";
-        } else {
-            // Mauvais email ou mot de passe
-            return "Email ou mot de passe incorrect.";
-        }
+        $results = Model::getInstance()->loginaUser('user');
+        $this->render('users.php', ['users' => $results]);
     }
-
+    
     // Méthode pour récupérer les détails d'un utilisateur spécifique
-    public function getUserDetails($userId)
+    public function getUserDetails()
     {
-        $stmt = $this->conn->prepare("SELECT * FROM users WHERE id = ?");
-        $stmt->execute([$userId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $results = Model::getInstance()->getaUserDetails('user');
+        $this->render('users.php', ['users' => $results]);
     }
 }
