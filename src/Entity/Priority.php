@@ -2,12 +2,8 @@
 
 namespace Tp\Project\Entity;
 
-class Priority {
+class Priority
+{
     private int $id_priority;
     private ?string $value;
-
 }
-
-
-
-?>

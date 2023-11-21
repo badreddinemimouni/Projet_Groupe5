@@ -1,45 +1,69 @@
 <?php
 
 namespace Tp\Project\Controller;
- 
+
 // Inclure les classes nécessaires
+
+use Tp\Project\App\AbstractController;
+use Tp\Project\Forms\registrationForm;
 use Tp\Project\App\Model;
-use Tp\Project\Entity\Users;
 
-class UsersController {
-    // Méthode pour inscrire un nouvel utilisateur
-
-    public function createUser(): void
-    {
-        $vars = [
-            'form' => loginForm::constructLoginForm('?controller=usersController&method=createUser', 'save'),
-        ];
-
-        $this->render('registration.php', $vars);
-    }
-
+class UsersController extends AbstractController
+{
+    // Méthode pour afficher formulaire de création d'utilisateur
 
     public function registerUser(): void
     {
-        $datas = [
-            'nom' => $_GET['nom'],
-            'email' => $_GET['email'],
-            'password' => $_GET['password'],
+        $vars = [
+            'form' => registrationForm::form('?controller=usersController&method=createUser'),
         ];
-        Model::getInstance()->save('users', $datas);
+        $this->render('registration.php', $vars);
     }
 
-    // Méthode pour connecter un utilisateur
-    public function loginUser(): void
+    // Méthode pour créer d'utilisateur
+    public function createUser(): void
     {
-        $results = Model::getInstance()->loginaUser('user');
-        $this->render('users.php', ['users' => $results]);
+        $datas = [
+            'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+            'login' => $_POST['username'],
+        ];
+        $validationMessages = registrationForm::validateFormRegistration();
+        if ($validationMessages === true) {
+            Model::getInstance()->save('users', $datas);
+        } else {
+            foreach ($validationMessages as $message) {
+                echo $message . '<br><br>';
+            }
+        }
     }
-    
-    // Méthode pour récupérer les détails d'un utilisateur spécifique
-    public function getUserDetails()
+
+    public function connectUser(): void
     {
-        $results = Model::getInstance()->getaUserDetails('user');
-        $this->render('users.php', ['users' => $results]);
+        $vars = [
+            'form' => loginForm::constructLoginForm('?controller=loginController&method=connect', 'save'),
+        ];
+
+        $this->render('login.php', $vars);
+    }
+
+    public function connect(): void
+    {
+
+        $datas = [
+            'password' => $_POST['password'],
+
+            'login' => $_POST['username'],
+
+        ];
+        $ValidConnexion = loginForm::processFormLogin();
+
+        if ($ValidConnexion === true) {
+            Model::getInstance()->save('users', $datas);
+            echo 'letsgoo';
+        } else {
+            foreach ($ValidConnexion as $message) {
+                echo $message . '<br><br>';
+            }
+        }
     }
 }
