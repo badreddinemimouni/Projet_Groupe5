@@ -49,23 +49,11 @@ class UsersController extends AbstractController
 
     public function connect(): void
     {
-
-        $datas = [
-            'password' => $_POST['password'],
-
-            'login' => $_POST['username'],
-
-        ];
-        // var_dump($datas);
-
         $validConnexion = loginForm::processFormLogin();
         if ($validConnexion === true) {
-            Model::getInstance()->save('users', $datas);
-            echo 'letsgoo';
+            echo "connecté";
         } else {
-            foreach ($validConnexion as $message) {
-                echo $message . '<br><br>';
-            }
-        }
+            echo $validConnexion;
+        };
     }
 }

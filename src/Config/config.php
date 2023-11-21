@@ -17,15 +17,3 @@ class Config
 }
 
 new Config();
-try {
-
-    $dbh = new PDO(
-        "mysql:dbname=" . Config::DBNAME . ";host=" . Config::DBHOST,
-        Config::DBUSER,
-        Config::DBPWD
-    );
-    echo 'salut';
-} catch (\PDOException $e) {
-    echo $e->getMessage();
-    echo 'marche pas';
-}

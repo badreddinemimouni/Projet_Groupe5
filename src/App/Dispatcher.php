@@ -8,7 +8,6 @@ use Tp\Project\Config\Config;
 
 class Dispatcher
 {
-
     public static function Dispatch()
     {
         $c = false;

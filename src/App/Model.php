@@ -44,10 +44,10 @@ class Model extends PDO
 
     public function getByAttribute($entity, $attribute, $value, $comp = '=')
     {
-        // SELECT * FROM table WHERE attribute = value
         $query = $this->query("SELECT * FROM $entity WHERE $attribute $comp '$value'");
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
+
 
     public function getProjectByParticipateUserId($userId)
     {
@@ -102,8 +102,6 @@ class Model extends PDO
             $i++;
         }
         $sql = $sql . " WHERE id='$id'";
-        // echo $sql . '<br>';
-        // var_dump($preparedDatas);
         $preparedRequest = $this->prepare($sql);
         $preparedRequest->execute($preparedDatas);
     }

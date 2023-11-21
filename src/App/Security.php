@@ -8,19 +8,31 @@ class Security
 {
     public static function verifyUser($login)
     {
-        // echo 'retoetn';
         $user = Model::getInstance()->getByAttribute('users', 'login', $login);
-        var_dump($user);
         if (!empty($user)) {
             return true;
         }
         return false;
     }
-    public static function getPassword($user)
+
+    public static function getUserData($user)
     {
-        $password = Model::getInstance()->getByAttribute('users', 'login', $user)[0]['password'];
-        return $password;
+        $userData = Model::getInstance()->getByAttribute('users', 'login', $user);
+        return $userData;
+    }
+
+    public static function disconnect()
+    {
+        if ($_SESSION['connected']) {
+            unset($_SESSION['connected']);
+        }
+    }
+
+    public static function is_connected()
+    {
+        if (isset($_SESSION['connected'])) {
+            return true;
+        }
+        return false;
     }
 }
-new Security();
-echo Security::verifyUser('badr');
