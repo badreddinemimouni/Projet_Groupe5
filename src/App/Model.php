@@ -44,8 +44,10 @@ class Model extends PDO
 
     public function getByAttribute($entity, $attribute, $value, $comp = '=')
     {
-        // SELECT * FROM table WHERE attribute = value
+        // echo 'modeell';
+
         $query = $this->query("SELECT * FROM $entity WHERE $attribute $comp '$value'");
+        var_dump($query);
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 

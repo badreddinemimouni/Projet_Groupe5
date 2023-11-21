@@ -3,6 +3,9 @@
 namespace Tp\Project\Forms;
  
 use Tp\Project\Forms;
+use Tp\Project\App\Model;
+use Tp\Project\Controller\UsersController;
+use Tp\Project\App\Security;
  
 class loginForm 
 {
@@ -22,12 +25,16 @@ class loginForm
         return $form;
     }
 
-    function processFormLogin()
+    public static function processFormLogin()
     {
         $error = false;
         if (isset($_POST['submit'])) {
+            echo 'submit';
             $username = $_POST['username'];
-            if (($password = getPasswordByLogin($username)) !== false) {
+            // var_dump($username);
+            if(Security::verifyUser($username)){
+                echo 'user existe';
+                $password=Security::getPassword();
                 if ($_POST['password'] === $password) {
                     $_SESSION['connected'] = 'connecté';
                     echo 'cestbobn';
@@ -36,10 +43,9 @@ class loginForm
                 } else {
                     $error = 'Identifiants non reconnus';
                 }
-            } else {
-                $error = 'Identifiants non reconnus';
             }
         }
+        
         return $error;
     }
 
