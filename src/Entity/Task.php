@@ -2,7 +2,8 @@
 
 namespace Tp\Project\Entity;
 
-class Task {
+class Task
+{
     private int $id_task;
     private ?int $priority;
     private ?string $title;
@@ -11,4 +12,9 @@ class Task {
     private ?int $id_status;
     private ?int $user_id;
     private ?int $id_project;
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
 }

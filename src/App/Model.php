@@ -36,6 +36,18 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
+    public function readByUserId($entity, $id)
+    {
+        $query = $this->query('select * from ' . $entity . ' where user_id = ' . $id);
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
+    }
+
+    public function readByProjectId($entity, $id)
+    {
+        $query = $this->query('select * from ' . $entity . ' where project_id = ' . $id);
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
+    }
+
     public function getById($entity, $id)
     {
         $query = $this->query('select * from ' . $entity . ' where id=' . $id);
