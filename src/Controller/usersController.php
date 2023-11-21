@@ -37,17 +37,33 @@ class UsersController extends AbstractController
         }
     }
 
-    // Méthode pour connecter un utilisateur
-    public function loginUser(): void
+    public function connectUser(): void
     {
-        $results = Model::getInstance()->loginUser('user');
-        $this->render('users.php', ['users' => $results]);
+        $vars = [
+            'form' => loginForm::constructLoginForm('?controller=loginController&method=connect', 'save'),
+        ];
+
+        $this->render('login.php', $vars);
     }
 
-    // Méthode pour récupérer les détails d'un utilisateur spécifique
-    public function getUserDetails()
+    public function connect(): void
     {
-        $results = Model::getInstance()->getUserDetails('user');
-        $this->render('users.php', ['users' => $results]);
+
+        $datas = [
+            'password' => $_POST['password'],
+
+            'login' => $_POST['username'],
+
+        ];
+        $ValidConnexion = loginForm::processFormLogin();
+
+        if ($ValidConnexion === true) {
+            Model::getInstance()->save('users', $datas);
+            echo 'letsgoo';
+        } else {
+            foreach ($ValidConnexion as $message) {
+                echo $message . '<br><br>';
+            }
+        }
     }
 }
