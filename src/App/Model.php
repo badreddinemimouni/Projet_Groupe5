@@ -51,11 +51,15 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
-    public function getPasswordByLogin($login){
-        $query = $this->query("SELECT password FROM users WHERE login = '$login' ");
-        return $query->fetch(PDO::FETCH_CLASS, Config::ENTITY);
-    }
 
+    public function getProjectByParticipateUserId($userId)
+    {
+        $query = $this->query("SELECT p.*
+                                FROM project p
+                                JOIN participate pa ON p.id = pa.id
+                                WHERE pa.user_id = $userId");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('project'));
+    }
 
     public function save($entity, $datas): void
     {
@@ -101,8 +105,6 @@ class Model extends PDO
             $i++;
         }
         $sql = $sql . " WHERE id='$id'";
-        // echo $sql . '<br>';
-        // var_dump($preparedDatas);
         $preparedRequest = $this->prepare($sql);
         $preparedRequest->execute($preparedDatas);
     }

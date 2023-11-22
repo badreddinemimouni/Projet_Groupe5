@@ -1,24 +1,32 @@
 <?php
+
 namespace Tp\Project\App;
+
 use Tp\Project\App\Model;
-class Security{
-    public static function verifyUser($login){
-        // echo 'retoetn';
-        $user = Model::getInstance()->getByAttribute('users','login',$login);
-        var_dump($user);
-        if(!empty($user)){
+
+
+class Security
+{
+    public static function verifyUser($login)
+    {
+        $user = Model::getInstance()->getByAttribute('users', 'login', $login);
+        if (!empty($user)) {
             return true;
         }
         return false;
     }
-    public static function getPassword($user){
-        $password = Model::getInstance()->getByAttribute('users','login',$user)[0]['password'];
-        return $password;
 
-
-
+    public static function getUserData($user)
+    {
+        $userData = Model::getInstance()->getByAttribute('users', 'login', $user);
+        return $userData;
     }
 
+    public static function is_connected()
+    {
+        if (isset($_SESSION['connected'])) {
+            return true;
+        }
+        return false;
+    }
 }
-new Security();
-echo Security::verifyUser('badr');

@@ -6,7 +6,9 @@ namespace Tp\Project\Controller;
 use Tp\Project\Forms\loginForm;
 use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\registrationForm;
+use Tp\Project\Forms\loginForm;
 use Tp\Project\App\Model;
+use Tp\Project\App\Dispatcher;
 
 class UsersController extends AbstractController
 {
@@ -48,24 +50,24 @@ class UsersController extends AbstractController
 
     public function connect(): void
     {
-        
+
         $datas = [
             'password' => $_POST['password'],
 
             'login' => $_POST['username'],
 
         ];
-        // var_dump($datas);
+        $ValidConnexion = loginForm::processFormLogin();
 
-        $validConnexion = loginForm::processFormLogin();
-        if ($validConnexion === true) {
+        if ($ValidConnexion === true) {
             Model::getInstance()->save('users', $datas);
             echo 'letsgoo';
         } else {
-            foreach ($validConnexion as $message) {
+            foreach ($ValidConnexion as $message) {
                 echo $message . '<br><br>';
             }
         }
+        Dispatcher::redirect('indexController', 'index');
     }
 
 }

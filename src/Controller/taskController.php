@@ -4,45 +4,65 @@ namespace Tp\Project\Controller;
 
 // Inclure les classes nécessaires
 use Tp\Project\App\Model;
-use Tp\Project\Entity\Task;
+use Tp\Project\App\AbstractController;
+use Tp\Project\Forms\TaskForm;
 
-class TaskController {
-    
-    public function changeStatus($status) {
-        // Méthode pour changer le statut de la tâche
-        $this->status = $status;
+class TaskController extends AbstractController
+{
+
+    // Méthode pour créer et ajouter une nouvelle tâche à un projet
+
+    public function registerFormTask(): void
+    {
+        $vars = [
+            'form' => taskForm::form('?controller=taskController&method=createTask'),
+        ];
+        $this->render('task.php', $vars);
     }
 
-    // Méthode pour ajouter une tâche à un projet
-    public function addTask($projectId, $userId, $title, $description, $priority, $status)
+    public function createTask()
     {
-        $stmt = $this->conn->prepare("INSERT INTO tasks (project_id, user_id, title, description, priority, status) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$projectId, $userId, $title, $description, $priority, $status]);
-        // Autres opérations après l'insertion, si nécessaire
+        $datas = [
+            // Récupérer les valeurs des champs distincts du formulaire
+            'title' => $_POST['task_title'],
+            'description' => $_POST['task_description'],
+            'id_priority' => $_POST['task_priority'],
+            'id_status' => 1,
+            'user_id' => 1,
+            'project_id' => 1,
+        ];
+        $validationMessages = taskForm::validateFormTask();
+        if ($validationMessages === true) {
+            Model::getInstance()->save('task', $datas);
+        } else {
+            foreach ($validationMessages as $message) {
+                echo $message . '<br><br>';
+            }
+        }
     }
 
     // Méthode pour mettre à jour l'état d'une tâche
-    public function updateTaskStatus($taskId, $newStatus)
+    public function updateTaskStatus()
     {
-        $stmt = $this->conn->prepare("UPDATE tasks SET status = ? WHERE id = ?");
-        $stmt->execute([$newStatus, $taskId]);
-        // Autres opérations après la mise à jour, si nécessaire
+        $datas = [
+            'status' => $_GET['status'],
+        ];
+        $id_task = $_GET['id'];
+        Model::getInstance()->updateById('task', $id_task, $datas);
     }
 
     // Méthode pour supprimer une tâche
-    public function deleteTask($taskId)
+    public function deleteTask()
     {
-        $stmt = $this->conn->prepare("DELETE FROM tasks WHERE id = ?");
-        $stmt->execute([$taskId]);
-        // Autres opérations après la suppression, si nécessaire
+        $id_task = $_GET['id'];
+        Model::getInstance()->deleteById('livre', $id_task);
     }
-    
+
     // Méthode pour récupérer toutes les tâches associées à un projet
-    public function getTasksByProject($projectId)
+    public function displayTasksByProject()
     {
-        $stmt = $this->conn->prepare("SELECT * FROM tasks WHERE project_id = ?");
-        $stmt->execute([$projectId]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $projectId = $_GET['id'];
+        $tasks = Model::getInstance()->getByAttribute('task', 'project_id', $projectId);
+        $this->render('tasks.php', ['tasks' => $tasks]);
     }
 }
-
