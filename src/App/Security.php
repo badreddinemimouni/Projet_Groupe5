@@ -11,7 +11,9 @@ class Security
     {
         
         $user = Model::getInstance()->getByAttribute('users', 'login', $login);
+        
         if (!empty($user)) {
+            
             return true;
         }
         return false;

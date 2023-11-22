@@ -39,10 +39,12 @@ class loginForm
             if ($verify !== false) {
                 $userData = Security::getUserData($username);
                 $password = $userData[0]->getPassword();
+              
                 $user_id = $userData[0]->getUserId();
 
                 if (password_verify($_POST['password'], $password)) {
                     $_SESSION['connected'] = 'connected';
+                    echo 'connecté';
                     $_SESSION['user_id'] = $user_id;
                     return true;
                 }
