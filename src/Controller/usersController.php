@@ -3,7 +3,7 @@
 namespace Tp\Project\Controller;
 
 // Inclure les classes nécessaires
-use Tp\Project\Forms\LoginForm;
+use Tp\Project\Forms\loginForm;
 use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\registrationForm;
 use Tp\Project\App\Model;
@@ -41,15 +41,17 @@ class UsersController extends AbstractController
 
     public function connectUser(): void
     {
+        
         $vars = [
-            'form' => LoginForm::constructLoginForm('?Controller=usersController&method=connect'),
+            'form' => loginForm::constructLoginForm('?controller=usersController&method=connect'),
         ];
 
         $this->render('login.php', $vars);
     }
 
     public function connect(): void
-    {
+    {   
+        
 
         $datas = [
             'password' => $_POST['password'],
@@ -67,7 +69,7 @@ class UsersController extends AbstractController
                 echo $message . '<br><br>';
             }
         }
-        Dispatcher::redirect('indexController', 'index');
+        // Dispatcher::redirect('indexController', 'index');
     }
 
 }
