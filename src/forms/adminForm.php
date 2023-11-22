@@ -11,7 +11,7 @@ class adminForm
             <input type='text' name='assign_user' class='form' autocomplete='assign_user' required autofocus>
             <input type='hidden' name='id' value='" . $_GET['id'] . "'>
             <button class='btn btn-lg btn-primary' type='submit' name='submit'>
-                Créer mon projet
+                Attitrer au projet
             </button>
         </form>";
         return $form;

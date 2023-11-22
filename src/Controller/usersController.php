@@ -32,12 +32,12 @@ class UsersController extends AbstractController
         $validationMessages = registrationForm::validateFormRegistration();
         if ($validationMessages === true) {
             Model::getInstance()->save('users', $datas);
+            Dispatcher::redirect('indexController', 'index');
         } else {
             foreach ($validationMessages as $message) {
                 echo $message . '<br><br>';
             }
         }
-        Dispatcher::redirect('indexController', 'index');
     }
 
     public function connectUser(): void
@@ -54,10 +54,10 @@ class UsersController extends AbstractController
         $validConnexion = loginForm::processFormLogin();
         if ($validConnexion === true) {
             echo "connecté";
+            Dispatcher::redirect('indexController', 'index');
         } else {
             echo $validConnexion;
         };
-        Dispatcher::redirect('indexController', 'index');
     }
 
     public static function disconnect()

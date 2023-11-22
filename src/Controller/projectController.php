@@ -24,15 +24,15 @@ class ProjectController extends AbstractController
     {
         $projectName = $_POST['project'];
         $userId = $_SESSION['user_id'];
-        $admin = Model::getInstance()->getByAttribute('admin', 'user_id', $userId);
-        if (empty($admin)) {
+        $adminId = Model::getInstance()->getAttributeByAttribute('admin', 'id_admin', 'user_id', $userId);
+
+        if (!$adminId) {
             $adminDatas = [
                 'user_id' => $userId,
             ];
             $admin = Model::getInstance()->save('admin', $adminDatas);
         }
-        $admin = Model::getInstance()->getByAttribute('admin', 'user_id', $userId);
-        $adminId = $admin[0]->getId();
+        $adminId = Model::getInstance()->getAttributeByAttribute('admin', 'id_admin', 'user_id', $userId);
         $datas = [
             'name' => $_POST['project'],
             'id_admin' => $adminId
@@ -40,9 +40,9 @@ class ProjectController extends AbstractController
         $validationMessage = projectForm::validateFormProject(); // appele la méthode statique validateFormProject de la classe projectForm.
         if ($validationMessage === true) {
             Model::getInstance()->save('project', $datas);
-            $projectId = Model::getInstance()->getByAttribute('project', 'name', $projectName);
+            $projectId = Model::getInstance()->getAttributeByAttribute('project', 'id',  'name', $projectName);
             $participateDatas = [
-                'id' => $projectId[0]->getId(),
+                'id' => $projectId,
                 'user_id' => $userId,
             ];
             Model::getInstance()->save('participate', $participateDatas);
