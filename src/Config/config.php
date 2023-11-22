@@ -16,4 +16,4 @@ class Config
     const DEFAULT_METHOD = 'index';
 }
 
-new Config();
+// new Config();

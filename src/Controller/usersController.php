@@ -3,7 +3,7 @@
 namespace Tp\Project\Controller;
 
 // Inclure les classes nécessaires
-use Tp\Project\Forms\loginForm;
+use Tp\Project\Forms\LoginForm;
 use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\registrationForm;
 use Tp\Project\App\Model;
@@ -16,7 +16,7 @@ class UsersController extends AbstractController
     public function registerUser(): void
     {
         $vars = [
-            'form' => registrationForm::form('?controller=usersController&method=createUser'),
+            'form' => registrationForm::form('?Controller=usersController&method=createUser'),
         ];
         $this->render('registration.php', $vars);
     }
@@ -41,7 +41,7 @@ class UsersController extends AbstractController
     public function connectUser(): void
     {
         $vars = [
-            'form' => loginForm::constructLoginForm('?controller=usersController&method=connect'),
+            'form' => LoginForm::constructLoginForm('?Controller=usersController&method=connect'),
         ];
 
         $this->render('login.php', $vars);
