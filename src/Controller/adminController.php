@@ -6,7 +6,6 @@ namespace Tp\Project\Controller;
 use Tp\Project\App\Model;
 use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\AdminForm;
-// use Tp\Project\Entity\Users;
 
 class AdminController extends AbstractController
 {
