@@ -36,18 +36,6 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
-    public function readByUserId($entity, $id)
-    {
-        $query = $this->query('select * from ' . $entity . ' where user_id = ' . $id);
-        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
-    }
-
-    public function readByProjectId($entity, $id)
-    {
-        $query = $this->query('select * from ' . $entity . ' where project_id = ' . $id);
-        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
-    }
-
     public function getById($entity, $id)
     {
         $query = $this->query('select * from ' . $entity . ' where id=' . $id);
@@ -56,9 +44,18 @@ class Model extends PDO
 
     public function getByAttribute($entity, $attribute, $value, $comp = '=')
     {
-        // SELECT * FROM table WHERE attribute = value
         $query = $this->query("SELECT * FROM $entity WHERE $attribute $comp '$value'");
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
+    }
+
+
+    public function getProjectByParticipateUserId($userId)
+    {
+        $query = $this->query("SELECT p.*
+                                FROM project p
+                                JOIN participate pa ON p.id = pa.id
+                                WHERE pa.user_id = $userId");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('project'));
     }
 
     public function save($entity, $datas): void
@@ -105,8 +102,6 @@ class Model extends PDO
             $i++;
         }
         $sql = $sql . " WHERE id='$id'";
-        // echo $sql . '<br>';
-        // var_dump($preparedDatas);
         $preparedRequest = $this->prepare($sql);
         $preparedRequest->execute($preparedDatas);
     }

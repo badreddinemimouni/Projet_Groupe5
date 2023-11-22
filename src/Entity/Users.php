@@ -2,7 +2,8 @@
 
 namespace Tp\Project\Entity;
 
-Class Users {
+class Users
+{
     private int $user_id;
     private string $password;
     private string $login;
@@ -19,11 +20,4 @@ Class Users {
     {
         return $this->user_id;
     }
-
 }
-
-
-
-
-
-

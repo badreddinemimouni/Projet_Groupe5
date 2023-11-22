@@ -6,7 +6,9 @@ namespace Tp\Project\Controller;
 
 use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\registrationForm;
+use Tp\Project\Forms\loginForm;
 use Tp\Project\App\Model;
+use Tp\Project\App\Dispatcher;
 
 class UsersController extends AbstractController
 {
@@ -40,7 +42,7 @@ class UsersController extends AbstractController
     public function connectUser(): void
     {
         $vars = [
-            'form' => loginForm::constructLoginForm('?controller=loginController&method=connect', 'save'),
+            'form' => loginForm::constructLoginForm('?controller=usersController&method=connect'),
         ];
 
         $this->render('login.php', $vars);
@@ -48,22 +50,20 @@ class UsersController extends AbstractController
 
     public function connect(): void
     {
-
-        $datas = [
-            'password' => $_POST['password'],
-
-            'login' => $_POST['username'],
-
-        ];
-        $ValidConnexion = loginForm::processFormLogin();
-
-        if ($ValidConnexion === true) {
-            Model::getInstance()->save('users', $datas);
-            echo 'letsgoo';
+        $validConnexion = loginForm::processFormLogin();
+        if ($validConnexion === true) {
+            echo "connecté";
         } else {
-            foreach ($ValidConnexion as $message) {
-                echo $message . '<br><br>';
-            }
+            echo $validConnexion;
+        };
+        Dispatcher::redirect('indexController', 'index');
+    }
+
+    public static function disconnect()
+    {
+        if ($_SESSION['connected']) {
+            unset($_SESSION['connected']);
         }
+        Dispatcher::redirect('indexController', 'index');
     }
 }

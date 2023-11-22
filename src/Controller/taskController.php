@@ -62,7 +62,7 @@ class TaskController extends AbstractController
     public function displayTasksByProject()
     {
         $projectId = $_GET['id'];
-        $tasks = Model::getInstance()->readByProjectId('task', $projectId);
+        $tasks = Model::getInstance()->getByAttribute('task', 'project_id', $projectId);
         $this->render('tasks.php', ['tasks' => $tasks]);
     }
 }

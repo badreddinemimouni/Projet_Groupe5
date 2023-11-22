@@ -32,4 +32,11 @@ class ProjectController extends AbstractController
             echo $validationMessage . '<br><br>';
         }
     }
+
+    public function displayProjectsByUserId()
+    {
+        $userId = $_SESSION['user_id'];
+        $projects = Model::getInstance()->getProjectByParticipateUserId($userId);
+        $this->render('projects.php', ['projects' => $projects]);
+    }
 }
