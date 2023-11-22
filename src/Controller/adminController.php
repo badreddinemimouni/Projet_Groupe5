@@ -8,7 +8,7 @@ use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\AdminForm;
 // use Tp\Project\Entity\Users;
 
-class AdminController extends AbstractController 
+class AdminController extends AbstractController
 {
     public function registerFormAdmin(): void
     {
@@ -18,15 +18,14 @@ class AdminController extends AbstractController
         $this->render('admin.php', $vars);
     }
     // L'admin ajoute un user au projet
-    public function assignUser() 
+    public function assignUser()
     {
         // Vérifier si les données du formulaire sont présentes
         if (isset($_POST['assign_user']) && isset($_POST['id'])) // il se réfère ici à l'identifiant du projet
-        { 
+        {
             $userData = Model::getInstance()->getByAttribute('users', 'login', $_POST['assign_user']);
-            
-            if (empty($userData)) 
-            {
+
+            if (empty($userData)) {
                 // Créer l'utilisateur s'il n'existe pas
                 $userData = [
                     'password' => 'tata', // À remplacer par la méthode appropriée pour sécuriser le mot de passe
@@ -39,83 +38,22 @@ class AdminController extends AbstractController
             $userData = Model::getInstance()->getByAttribute('users', 'login', $_POST['assign_user']);
             $userId = $userData[0]->getUserId();
 
-            if ($userId) 
-            {
+            if ($userId) {
                 $participateData = [
                     'id' => $_POST['id'],
                     'user_id' => $userId,
                 ];
 
-                 Model::getInstance()->save('participate', $participateData);
+                Model::getInstance()->save('participate', $participateData);
             }
         }
     }
-}
 
-
-/*      
-        // si l'user existe
-        if (isset($_POST['assign_user']) && isset($_POST['id'])) { // ajout de l'user au projet
-            $datas = [
-                'id' => $_POST['id'],
-                'user_id' => $_POST['user_id'],
-            ];
-            adminForm::validateFormAdmin(); // appele la méthode statique validateFormAdmin de la classe adminForm.
-            Model::getInstance()->save('participate', $datas); // met les données rentrées dans le form dans la BDD
-
-        } else { // création de l'user
-            $datas = [
-                'password' => 'toto',
-                'login' => $_POST['assign_user'],
-            ];
-            adminForm::validateFormAdmin(); // appele la méthode statique validateFormAdmin de la classe adminForm.
-            Model::getInstance()->save('users', $datas); // met les données rentrées dans le form dans la BDD
-        }
-*/
-
-
-
-
-
-
-
-
-/* 
-        else {
-                // Gérer l'échec de création ou récupération de l'utilisateur
-                // Peut-être une redirection ou un message d'erreur approprié
-            }
-        } else {
-            // Gérer le cas où les données du formulaire ne sont pas complètes
-            // Peut-être une redirection ou un message d'erreur approprié
-        } 
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 
+    public function createAdmin($userId)
+    {
         $datas = [
-            'password' => 'toto',
-            'login' => $_POST['assign_user'],
+            'user_id' => $userId,
         ];
-    
-        $validationMessage = adminForm::validateFormAdmin(); // appele la méthode statique validateFormAdmin de la classe adminForm.
-            if ($validationMessage === true) {
-                Model::getInstance()->save('users', $datas);
-            } else {
-                echo $validationMessage . '<br><br>';
-            }
-        } 
-*/
+        Model::getInstance()->save('admin', $datas);
+    }
+}
