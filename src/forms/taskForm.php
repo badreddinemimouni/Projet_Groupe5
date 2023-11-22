@@ -32,9 +32,9 @@ class taskForm
         if (isset($_POST['task_title']) && strlen($_POST['task_title']) < 3) {
             $error[] = 'Le titre de la tâche doit comporter au moins 3 caractères';
         }
-        if (isset($_POST['task_priority']) && $_POST['task_priority'] < 3 && $_POST['task_priority'] >= 1) {
+        /* if (isset($_POST['task_priority']) && $_POST['task_priority'] < 3 && $_POST['task_priority'] >= 1) {
             $error[] = 'La priorité de la tâche doit être égale à Haute, Moyenne ou Faible.';
-        }
+        } */
         if (isset($_POST['task_description']) && strlen($_POST['task_description']) < 5) {
             $error[] = 'La description de la tâche doit comporter au moins 3 caractères';
         }

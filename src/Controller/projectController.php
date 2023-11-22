@@ -23,7 +23,7 @@ class ProjectController extends AbstractController
     {
         $datas = [
             'name' => $_POST['project'],
-            'id_admin' => 1,
+            'id_admin' => $_SESSION['user_id'], // l'id_admin devient celui de l'utilisateur
         ];
         $validationMessage = projectForm::validateFormProject(); // appele la méthode statique validateFormProject de la classe projectForm.
         if ($validationMessage === true) {

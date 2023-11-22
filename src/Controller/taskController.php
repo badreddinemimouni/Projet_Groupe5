@@ -27,9 +27,9 @@ class TaskController extends AbstractController
             'title' => $_POST['task_title'],
             'description' => $_POST['task_description'],
             'id_priority' => $_POST['task_priority'],
-            'id_status' => 1,
-            'user_id' => 1,
-            'project_id' => 1,
+            'id_status' => $_SESSION['id_status'],
+            'user_id' => $_SESSION['user_id'],
+            'project_id' => $_SESSION['project_id'],
         ];
         $validationMessages = taskForm::validateFormTask();
         if ($validationMessages === true) {

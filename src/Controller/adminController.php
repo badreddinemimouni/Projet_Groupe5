@@ -38,6 +38,7 @@ class AdminController extends AbstractController
 
             $userData = Model::getInstance()->getByAttribute('users', 'login', $_POST['assign_user']);
             $userId = $userData[0]->getUserId();
+            // $userId = $_SESSION['user_id'];
 
             if ($userId) 
             {

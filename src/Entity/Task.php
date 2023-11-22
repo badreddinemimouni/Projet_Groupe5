@@ -17,4 +17,9 @@ class Task
     {
         return $this->title;
     }
+
+    public function getPriority()
+    {
+        return $this->id_priority;
+    }
 }
