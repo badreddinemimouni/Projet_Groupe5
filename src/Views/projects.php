@@ -8,9 +8,8 @@
     foreach ($projects as $project) {
         echo 'Titre : ' . $project->getName() . ' ';
         $userId = $_SESSION['user_id'];
-        $admin = Model::getInstance()->getByAttribute('admin', 'user_id', $userId);
-        if (!empty($admin)) {
-            $adminId = $admin[0]->getId();
+        $adminId = Model::getInstance()->getAttributeByAttribute('admin', 'id_admin', 'user_id', $userId);
+        if ($adminId) {
             $projectAdminId = $project->getIdAdmin();
             if ($adminId === $projectAdminId) {
                 echo '<a href="' . Dispatcher::generateUrl('adminController', 'registerFormAdmin', ['id' => $project->getId()]) . '">Ajouter un utilisateur</a>  ';

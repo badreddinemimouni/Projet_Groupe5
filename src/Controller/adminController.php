@@ -6,6 +6,7 @@ namespace Tp\Project\Controller;
 use Tp\Project\App\Model;
 use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\AdminForm;
+use Tp\Project\App\Dispatcher;
 
 class AdminController extends AbstractController
 {
@@ -45,6 +46,7 @@ class AdminController extends AbstractController
 
                 Model::getInstance()->save('participate', $participateData);
             }
+            Dispatcher::redirect('projectController', 'displayProjectsByUserId');
         }
     }
 }

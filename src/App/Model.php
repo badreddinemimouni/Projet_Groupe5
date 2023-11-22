@@ -51,6 +51,11 @@ class Model extends PDO
         
     }
 
+    public function getAttributeByAttribute($entity, $attribute, $byAttribute, $value, $comp = '=')
+    {
+        $query = $this->query("SELECT $attribute FROM $entity WHERE $byAttribute $comp '$value'");
+        return $query->fetchColumn();
+    }
 
     public function getProjectByParticipateUserId($userId)
     {

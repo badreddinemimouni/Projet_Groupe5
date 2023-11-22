@@ -10,7 +10,7 @@
         $main = $view;
     }
     include_once(__DIR__ . $main);
-    
+
     ?>
 </body>
 
