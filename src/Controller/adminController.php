@@ -48,12 +48,4 @@ class AdminController extends AbstractController
             }
         }
     }
-
-    public function createAdmin($userId)
-    {
-        $datas = [
-            'user_id' => $userId,
-        ];
-        Model::getInstance()->save('admin', $datas);
-    }
 }

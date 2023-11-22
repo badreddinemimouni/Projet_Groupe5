@@ -36,6 +36,7 @@ class UsersController extends AbstractController
                 echo $message . '<br><br>';
             }
         }
+        Dispatcher::redirect('indexController', 'index');
     }
 
     public function connectUser(): void

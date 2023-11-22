@@ -76,6 +76,7 @@ class Model extends PDO
         }
         $sql .= ') VALUES (';
         $i = 0;
+        var_dump($datas);
         foreach ($datas as $data) {
             $preparedDatas[] = htmlspecialchars($data);
             $sql .= "?";
