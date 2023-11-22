@@ -9,7 +9,7 @@ class adminForm
         $form = "<form action='$action' method='POST'>
             <label for='assign_user'>Ajouter un utilisateur au projet</label>
             <input type='text' name='assign_user' class='form' autocomplete='assign_user' required autofocus>
-            <input type='hidden' name='id' value='" . $_GET['id'] . "'>
+            <input type='hidden' name='id' value='" . $_GET['id'] . "'/>
             <button class='btn btn-lg btn-primary' type='submit' name='submit'>
                 Attitrer au projet
             </button>

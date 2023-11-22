@@ -53,7 +53,6 @@ class UsersController extends AbstractController
     {
         $validConnexion = loginForm::processFormLogin();
         if ($validConnexion === true) {
-            echo "connecté";
             Dispatcher::redirect('indexController', 'index');
         } else {
             echo $validConnexion;
