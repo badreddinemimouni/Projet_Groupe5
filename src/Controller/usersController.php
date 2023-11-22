@@ -24,6 +24,7 @@ class UsersController extends AbstractController
     // Méthode pour créer d'utilisateur
     public function createUser(): void
     {
+        echo "ssa";
         $datas = [
             'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
             'login' => $_POST['username'],
