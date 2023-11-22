@@ -35,7 +35,7 @@ class ProjectController extends AbstractController
 
     public function displayProjectsByUserId()
     {
-        $userId = $_GET['id'];
+        $userId = $_SESSION['user_id'];
         $projects = Model::getInstance()->getProjectByParticipateUserId($userId);
         $this->render('projects.php', ['projects' => $projects]);
     }

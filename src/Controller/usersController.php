@@ -8,6 +8,7 @@ use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\registrationForm;
 use Tp\Project\Forms\loginForm;
 use Tp\Project\App\Model;
+use Tp\Project\pp\Dispatcher;
 
 class UsersController extends AbstractController
 {
@@ -55,5 +56,13 @@ class UsersController extends AbstractController
         } else {
             echo $validConnexion;
         };
+    }
+
+    public static function disconnect()
+    {
+        if ($_SESSION['connected']) {
+            unset($_SESSION['connected']);
+        }
+        Dispatcher::redirect('indexController', 'index');
     }
 }

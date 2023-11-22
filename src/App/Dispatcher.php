@@ -28,4 +28,20 @@ class Dispatcher
         $controller = new $c();
         $controller->$m();
     }
+
+    public static function generateUrl($controller, $method, $query = null)
+    {
+        $url = 'index.php?controller=' . $controller . '&method=' . $method;
+        if (is_array($query) && count($query) > 0) {
+            foreach ($query as $key => $value) {
+                $url = $url . '&' . $key . '=' . $value;
+            }
+        }
+        return $url;
+    }
+
+    public static function redirect($controllerName, $method)
+    {
+        header('location: ' . self::generateUrl($controllerName, $method, $query = null));
+    }
 }

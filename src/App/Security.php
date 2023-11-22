@@ -22,13 +22,6 @@ class Security
         return $userData;
     }
 
-    public static function disconnect()
-    {
-        if ($_SESSION['connected']) {
-            unset($_SESSION['connected']);
-        }
-    }
-
     public static function is_connected()
     {
         if (isset($_SESSION['connected'])) {
