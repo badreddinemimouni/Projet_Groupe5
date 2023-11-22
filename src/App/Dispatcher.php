@@ -40,7 +40,7 @@ class Dispatcher
         return $url;
     }
 
-    public static function redirect($controllerName, $method)
+    public static function redirect($controllerName, $method, $query = null)
     {
         header('location: ' . self::generateUrl($controllerName, $method, $query = null));
     }
