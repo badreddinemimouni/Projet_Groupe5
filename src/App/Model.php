@@ -48,6 +48,23 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
+    public function getPriorityLabel($id)
+    {
+        $query = $this->query('select value from priority where id_priority=' . $id);
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('priority'))[0];
+    }
+
+    public function getStatusLabel($id)
+    {
+        $query = $this->query('select value from status where id_status=' . $id);
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('status'))[0];
+    }
+
+    public function getAttributeByAttribute($entity, $attribute, $byAttribute, $value, $comp = '=')
+    { 
+        $query = $this->query("SELECT $attribute FROM $entity WHERE $byAttribute $comp '$value'");
+        return $query->fetchColumn();
+    }
 
     public function getProjectByParticipateUserId($userId)
     {
@@ -113,3 +130,12 @@ class Model extends PDO
         $this->exec($sql);
     }
 }
+
+/* public function getProjectByParticipateUserId($userId)
+{
+    $query = $this->query("SELECT p.*
+                            FROM project p
+                            JOIN participate pa ON p.id = pa.id
+                            WHERE pa.user_id = $userId");
+    return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('project'));
+} */
