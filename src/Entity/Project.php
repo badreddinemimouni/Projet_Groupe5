@@ -17,4 +17,8 @@ class Project
     {
         return $this->id;
     }
+    public function getIdAdmin()
+    {
+        return $this->id_admin;
+    }
 }

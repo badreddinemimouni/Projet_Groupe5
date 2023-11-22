@@ -6,7 +6,6 @@ namespace Tp\Project\Controller;
 use Tp\Project\App\Model;
 use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\AdminForm;
-// use Tp\Project\Entity\Users;
 
 class AdminController extends AbstractController
 {
@@ -28,7 +27,7 @@ class AdminController extends AbstractController
             if (empty($userData)) {
                 // Créer l'utilisateur s'il n'existe pas
                 $userData = [
-                    'password' => 'tata', // À remplacer par la méthode appropriée pour sécuriser le mot de passe
+                    'password' => password_hash($_POST['assign_user'], PASSWORD_DEFAULT),
                     'login' => $_POST['assign_user'],
                 ];
                 // Insérer l'utilisateur dans la table 'users'
