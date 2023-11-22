@@ -3,6 +3,7 @@
 namespace Tp\Project\App;
 
 use Tp\Project\App\Model;
+use Tp\Project\App\Dispatcher;
 
 class Security
 {
