@@ -6,7 +6,6 @@ namespace Tp\Project\Controller;
 use Tp\Project\Forms\loginForm;
 use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\registrationForm;
-use Tp\Project\Forms\loginForm;
 use Tp\Project\App\Model;
 use Tp\Project\App\Dispatcher;
 
@@ -71,11 +70,6 @@ class UsersController extends AbstractController
     }
 
 }
-METHOD = 'index';
-}
 
-new Config();
-
-try {
 
    
