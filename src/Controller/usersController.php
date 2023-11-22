@@ -8,7 +8,7 @@ use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\registrationForm;
 use Tp\Project\Forms\loginForm;
 use Tp\Project\App\Model;
-use Tp\Project\pp\Dispatcher;
+use Tp\Project\App\Dispatcher;
 
 class UsersController extends AbstractController
 {
@@ -56,6 +56,7 @@ class UsersController extends AbstractController
         } else {
             echo $validConnexion;
         };
+        Dispatcher::redirect('indexController', 'index');
     }
 
     public static function disconnect()
