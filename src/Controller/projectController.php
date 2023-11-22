@@ -26,7 +26,6 @@ class ProjectController extends AbstractController
         $userId = $_SESSION['user_id'];
         $admin = Model::getInstance()->getByAttribute('admin', 'user_id', $userId);
         if (empty($admin)) {
-            echo "JSUIS LA";
             $adminDatas = [
                 'user_id' => $userId,
             ];
@@ -47,10 +46,10 @@ class ProjectController extends AbstractController
                 'user_id' => $userId,
             ];
             Model::getInstance()->save('participate', $participateDatas);
-            Dispatcher::redirect('projectController', 'displayProjectsByUserId');
         } else {
             echo $validationMessage . '<br><br>';
         }
+        Dispatcher::redirect('projectController', 'displayProjectsByUserId');
     }
 
     public function displayProjectsByUserId()
