@@ -1,3 +1,3 @@
 <?php
 
-header('location: http://localhost/tp/Projet_Groupe5');
+header('location: http://localhost/Projet_Groupe5/index.php');
