@@ -48,6 +48,11 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
+    public function getAttributeByAttribute($entity, $attribute, $byAttribute, $value, $comp = '=')
+    {
+        $query = $this->query("SELECT $attribute FROM $entity WHERE $byAttribute $comp '$value'");
+        return $query->fetchColumn();
+    }
 
     public function getProjectByParticipateUserId($userId)
     {
