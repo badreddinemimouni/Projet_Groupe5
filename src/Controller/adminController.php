@@ -27,7 +27,7 @@ class AdminController extends AbstractController
             if (empty($userData)) {
                 // Créer l'utilisateur s'il n'existe pas
                 $userData = [
-                    'password' => $_POST['assign_user'],
+                    'password' => password_hash($_POST['assign_user'], PASSWORD_DEFAULT),
                     'login' => $_POST['assign_user'],
                 ];
                 // Insérer l'utilisateur dans la table 'users'
