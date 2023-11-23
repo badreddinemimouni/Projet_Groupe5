@@ -28,20 +28,19 @@ class TaskController extends AbstractController
         $userAdminId = Model::getInstance()->getAttributeByAttribute('admin', 'id_admin', 'user_id', $userId);
         $project_id = $_POST['project_id'];
         $projectAdminId = Model::getInstance()->getAttributeByAttribute('project', 'id', 'id_admin', $userAdminId);
-        $datas = [
-            // Récupére les valeurs des champs distincts du formulaire
-            'title' => $_POST['task_title'],
-            'description' => $_POST['task_description'],
-            'id_priority' => $_POST['task_priority'],
-            'id_status' => 1, // Tache créé automatiquement définis sur status 1
-            'user_id' => $_POST['user_assigned'],
-            'project_id' => $_POST['project_id'],
-        ];
-
         // Verification que l'user est admin du projet
         if ($userAdminId === $projectAdminId) {
             $validationMessages = taskForm::validateFormTask();
             if ($validationMessages === true) {
+                $datas = [
+                    // Récupére les valeurs des champs distincts du formulaire
+                    'title' => $_POST['task_title'],
+                    'description' => $_POST['task_description'],
+                    'id_priority' => $_POST['task_priority'],
+                    'id_status' => 1, // Tache créé automatiquement définis sur status 1
+                    'user_id' => $_POST['user_assigned'],
+                    'project_id' => $_POST['project_id'],
+                ];
                 Model::getInstance()->save('task', $datas);
                 Dispatcher::redirect('taskController', 'displayTasksByProject', ['id' => $project_id]);
             } else {
