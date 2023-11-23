@@ -13,16 +13,28 @@ class Task
     private ?int $user_id;
     private ?int $project_id;
 
+    // Méthode pour récupérer l'identifiant de la tâche
+    public function getId()
+    {
+        return $this->id_task;
+    }
+    
+    // Méthode pour récupérer la priorité de la tâche
+    public function getPriority()
+    {
+        return $this->id_priority;
+    }
+
     // Méthode pour récupérer le titre de la tâche
     public function getTitle()
     {
         return $this->title;
     }
 
-    // Méthode pour récupérer la priorité de la tâche
-    public function getPriority()
+    // Méthode pour récupérer la description de la tâche
+    public function getDescription()
     {
-        return $this->id_priority;
+        return $this->description;
     }
 
     // Méthode pour récupérer le statut de la tâche
@@ -31,9 +43,9 @@ class Task
         return $this->id_status;
     }
 
-    // Méthode pour récupérer l'identifiant de la tâche
-    public function getId()
+    // Méthode pour récupérer l'identifiant de l'utilisateur de la tâche
+    public function getUserId()
     {
-        return $this->id_task;
+        return $this->user_id;
     }
 }
