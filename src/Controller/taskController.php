@@ -66,16 +66,10 @@ class TaskController extends AbstractController
     public function updateTask()
     {
         $id_task = $_POST['id_task'];
-        echo $id_task;
         $task = Model::getInstance()->getOneByAttribute('task', 'id_task', $id_task);
-        echo $task->getProjectId();
         // paramètres dans le formulaire
-        if (isset($_POST['task_title'], $_POST['id_task'], $_POST['task_priority'], $_POST['task_description'], $_POST['user_assigned'])) 
-        {
-            $task_title = $_POST['task_title'];
-            $task_priority = $_POST['task_priority'];
-            $task_description = $_POST['task_description'];
-            $user_assigned = $_POST['user_assigned'];
+        $validationMessages = updateTaskForm::validateUpdateFormTask();
+        if ($validationMessages === true) {
             $datas = [
                 // Récupére les valeurs des champs distincts du formulaire
                 'title' => $_POST['task_title'],
@@ -86,9 +80,11 @@ class TaskController extends AbstractController
             ];
             Model::getInstance()->updateByAttribute('task', 'id_task', $id_task, $datas);
             Dispatcher::redirect('taskController', 'displayTasksByProject', ['id' => $task->getProjectId()]);
+        } else {
+            foreach ($validationMessages as $message) {
+                echo $message . '<br><br>';
+            }
         }
-        // Redirige vers la page précédente après la mise à jour
-        //$this->redirect('taskController', 'displayTasksByProject');
     }
 
     // Méthode pour supprimer une tâche
