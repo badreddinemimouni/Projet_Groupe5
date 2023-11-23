@@ -54,12 +54,10 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
-<<<<<<<<< Temporary merge branch 1
     public function getAttributeByAttribute($entity, $attribute, $byAttribute, $value, $comp = '=')
     {
         $query = $this->query("SELECT $attribute FROM $entity WHERE $byAttribute $comp '$value'");
         return $query->fetchColumn();
-=========
     // Méthode spécifique pour récupérer le label de priorité en fonction de son ID
     public function getPriorityLabel($id)
     {
