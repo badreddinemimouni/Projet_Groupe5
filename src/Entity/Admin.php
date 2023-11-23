@@ -9,6 +9,7 @@ class Admin
 
     // Méthode pour récupérer l'identifiant de l'administrateur
     public function getId()
+
     {
         return $this->id_admin;
     }

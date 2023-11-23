@@ -30,6 +30,8 @@ class ProjectController extends AbstractController
         // Vérification de l'existence de l'administrateur dans la table 'admin'
         $admin = Model::getInstance()->getByAttribute('admin', 'user_id', $userId);
         if (empty($admin)) {
+<<<<<<<<< Temporary merge branch 1
+=========
             // Si l'administrateur n'existe pas, il est créé
             $adminDatas = [
                 'user_id' => $userId,
@@ -58,7 +60,7 @@ class ProjectController extends AbstractController
 
             // Ajout de l'utilisateur comme participant au projet
             $participateDatas = [
-                'id' => $projectId[0]->getId(),
+                'id' => $projectId,
                 'user_id' => $userId,
             ];
             Model::getInstance()->save('participate', $participateDatas);

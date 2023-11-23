@@ -4,7 +4,7 @@ namespace Tp\Project\Forms;
  
 class adminForm
 {
-    
+
     public static function form($action)
     {
         // Formulaire pour affecter un utilisateur à un projet

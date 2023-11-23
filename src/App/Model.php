@@ -54,6 +54,12 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
+<<<<<<<<< Temporary merge branch 1
+    public function getAttributeByAttribute($entity, $attribute, $byAttribute, $value, $comp = '=')
+    {
+        $query = $this->query("SELECT $attribute FROM $entity WHERE $byAttribute $comp '$value'");
+        return $query->fetchColumn();
+=========
     // Méthode spécifique pour récupérer le label de priorité en fonction de son ID
     public function getPriorityLabel($id)
     {
@@ -68,11 +74,26 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('status'))[0];
     }
 
+    public function getAll($entity)
+    {
+        $query = $this->query("select * from $entity");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
+    }
+
     // Méthode pour récupérer un attribut spécifique en fonction d'un autre attribut dans une table
     public function getAttributeByAttribute($entity, $attribute, $byAttribute, $value, $comp = '=')
-    { 
+    {
         $query = $this->query("SELECT $attribute FROM $entity WHERE $byAttribute $comp '$value'");
         return $query->fetchColumn();
+    }
+    // Méthode
+    public function getParticipantsByproject($projectId)
+    {
+        $query = $this->query("SELECT *
+                                    FROM users u
+                                    JOIN participate pa ON u.user_id = pa.user_id
+                                    WHERE pa.id = $projectId");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('users'));
     }
 
     // Méthode pour récupérer les projets associés à un utilisateur via la table de liaison 'participate'
@@ -135,6 +156,25 @@ class Model extends PDO
             $i++;
         }
         $sql = $sql . " WHERE id='$id'";
+        $preparedRequest = $this->prepare($sql);
+        $preparedRequest->execute($preparedDatas);
+    }
+
+    public function updateByAttribute($entity, $attribute, $id, $datas): void
+    {
+        $sql = 'UPDATE ' . $entity . ' SET ';
+        $count = count($datas) - 1;
+        $preparedDatas = [];
+        $i = 0;
+        foreach ($datas as $key => $value) {
+            $preparedDatas[] = htmlspecialchars($value);
+            $sql .= $key . " = ?";
+            if ($i < $count) {
+                $sql = $sql . ', ';
+            }
+            $i++;
+        }
+        $sql = $sql . " WHERE " . $attribute . " ='$id'";
         $preparedRequest = $this->prepare($sql);
         $preparedRequest->execute($preparedDatas);
     }
