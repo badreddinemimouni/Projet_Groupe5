@@ -8,7 +8,6 @@ class registrationForm
 {
     public static function form($action)
     {
-        echo 'ssa';
         $form = "<form action=$action method='POST'>
         <label for='username'>Nom d'utilisateur</label>
         <input type='text' name='username' class='form' autocomplete='username' required autofocus>
