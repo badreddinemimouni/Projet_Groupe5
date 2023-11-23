@@ -24,7 +24,7 @@ class updateTaskForm
         <input type='text' name='task_title' value='" . $task->getTitle() . "'>
         <input type='hidden' name='id_task' value='" . $task_id . "'>
         <label for='task_priority'>Priorité de la tâche</label>
-        <select name='task_status' class='form' autocomplete='task_status' required autofocus>";
+        <select name='task_priority' class='form' autocomplete='task_status' required autofocus>";
         foreach ($priorities as $priority) {
             $form .= "<option value=" . $priority->getId() . ($priority->getId() === $task_priority ? ' selected' : '') . ">" . $priority->getPriorityValue() . "</option>";
         }
@@ -63,7 +63,7 @@ class updateTaskForm
         if (!isset($_POST['task_priority'])) {
             $error[] = 'La priorité de la tâche doit être égale à Haute, Moyenne ou Faible.';
         }
-        if (!isset($_POST['task_description']) || strlen($_POST['task_description']) < 3) {
+        if (!isset($_POST['task_description'])) {
             $error[] = 'La description de la tâche doit comporter au moins 3 caractères';
         }
 
