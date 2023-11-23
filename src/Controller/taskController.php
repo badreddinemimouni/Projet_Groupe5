@@ -68,7 +68,7 @@ class TaskController extends AbstractController
     {
         $id_task = $_POST['id_task'];
         echo $id_task;
-        $task = Model::getInstance()->getOneByAttribute('task', 'id_task', $id_task);
+        $task = Model::getInstance()->getOneByAttribute('task', 'id_task', $id_task); // je récupère l'objet task c'est-à-dire toute la ligne associée à une tâche (toute la tâche)
         echo $task->getProjectId();
         // paramètres dans le formulaire
         if (isset($_POST['task_title'], $_POST['id_task'], $_POST['task_priority'], $_POST['task_description'], $_POST['user_assigned'])) 
@@ -78,7 +78,7 @@ class TaskController extends AbstractController
             $task_description = $_POST['task_description'];
             $user_assigned = $_POST['user_assigned'];
             $datas = [
-                // Récupére les valeurs des champs distincts du formulaire
+                // Récupére les valeurs des champs distincts du formulaire par rapport au colonne de la table 'tasks'
                 'title' => $_POST['task_title'],
                 'id_priority' => $_POST['task_priority'],
                 'description' => $_POST['task_description'],
