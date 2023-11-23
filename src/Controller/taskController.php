@@ -11,8 +11,7 @@ use Tp\Project\App\Dispatcher;
 class TaskController extends AbstractController
 {
 
-    // Méthode pour créer et ajouter une nouvelle tâche à un projet
-
+    // Méthode pour afficher le formulaire de création d'une nouvelle tâche
     public function registerFormTask(): void
     {
         $vars = [
@@ -21,6 +20,7 @@ class TaskController extends AbstractController
         $this->render('task.php', $vars);
     }
 
+    // Méthode pour créer une nouvelle tâche
     public function createTask()
     {
         $userId = $_SESSION['user_id'];
@@ -28,7 +28,7 @@ class TaskController extends AbstractController
         $project_id = $_POST['project_id'];
         $projectAdminId = Model::getInstance()->getAttributeByAttribute('project', 'id', 'id_admin', $userAdminId);
         $datas = [
-            // Récupérer les valeurs des champs distincts du formulaire
+            // Récupére les valeurs des champs distincts du formulaire
             'title' => $_POST['task_title'],
             'description' => $_POST['task_description'],
             'id_priority' => $_POST['task_priority'],
@@ -72,7 +72,7 @@ class TaskController extends AbstractController
         Model::getInstance()->deleteById('livre', $id_task);
     }
 
-    // Méthode pour récupérer toutes les tâches associées à un projet
+    // Méthode pour afficher toutes les tâches associées à un projet
     public function displayTasksByProject()
     {
         $projectId = $_GET['id'];

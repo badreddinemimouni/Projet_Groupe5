@@ -13,7 +13,6 @@ use Tp\Project\App\Dispatcher;
 class UsersController extends AbstractController
 {
     // Méthode pour afficher formulaire de création d'utilisateur
-
     public function registerUser(): void
     {
         $vars = [
@@ -40,6 +39,7 @@ class UsersController extends AbstractController
         }
     }
 
+    // Méthode pour afficher le formulaire de connexion d'utilisateur
     public function connectUser(): void
     {
         $vars = [
@@ -49,6 +49,7 @@ class UsersController extends AbstractController
         $this->render('login.php', $vars);
     }
 
+    // Méthode pour gérer la connexion de l'utilisateur
     public function connect(): void
     {
         $validConnexion = loginForm::processFormLogin();
@@ -59,6 +60,7 @@ class UsersController extends AbstractController
         };
     }
 
+    // Méthode pour déconnecter l'utilisateur
     public static function disconnect()
     {
         if ($_SESSION['connected']) {

@@ -2,12 +2,11 @@
 
 namespace Tp\Project\Forms;
 
-use Tp\Project\Forms;
-
 class registrationForm
 {
     public static function form($action)
     {
+        // Formulaire de création d'utilisateur
         $form = "<form action=$action method='POST'>
         <label for='username'>Nom d'utilisateur</label>
         <input type='text' name='username' class='form' autocomplete='username' required autofocus>
@@ -24,6 +23,7 @@ class registrationForm
 
     public static function validateFormRegistration()
     {
+        // Validation des données du formulaire
         $error = [];
         if (isset($_POST['username']) && strlen($_POST['username']) < 5) {
             $error[] = 'Le nom d\'utilisateur doit comporter 5 caractères';
@@ -36,9 +36,10 @@ class registrationForm
             $error[] = 'Les mots de passe doivent être identiques';
         }
 
+        // Vérification des erreurs
         if (count($error) > 0) {
-            return $error;
+            return $error; // Retourne les erreurs si elles existent
         }
-        return true;
+        return true; // Retourne true si aucune erreur n'est détectée
     }
 }
