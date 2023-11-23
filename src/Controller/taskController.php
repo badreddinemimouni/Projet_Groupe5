@@ -63,15 +63,6 @@ class TaskController extends AbstractController
         $this->render('updatetask.php', $vars);
     }
 
-    // Méthode pour afficher le formulaire d'actualisation d'une nouvelle tâche
-    public function UpdateFormTask(): void
-    {
-        $vars = [
-            'form' => updateTaskForm::form('?controller=taskController&method=updateTask'),
-        ];
-        $this->render('updatetask.php', $vars);
-    }
-
     // Méthode pour mettre à jour le statut d'une tâche
     public function updateTask()
     {
