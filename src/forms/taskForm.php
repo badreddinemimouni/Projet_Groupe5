@@ -7,7 +7,6 @@ use Tp\Project\App\Model;
 
 class taskForm
 {
-    // Formulaire pour créer une tâche
     public static function form($action)
     {
         $projectId = $_GET['project_id'];
@@ -45,7 +44,6 @@ class taskForm
         // Validation des données du formulaire
         $error = [];
         if (!isset($_POST['task_title']) || strlen($_POST['task_title']) < 3) {
-        if (!isset($_POST['task_title']) || strlen($_POST['task_title']) < 3) {
             $error[] = 'Le titre de la tâche doit comporter au moins 3 caractères';
         }
         if (!isset($_POST['user_assigned'])) {
@@ -63,6 +61,5 @@ class taskForm
             return $error; // Retourne les erreurs si elles existent
         }
         return true; // Retourne true si aucune erreur n'est détectée
-        }
     }
 }

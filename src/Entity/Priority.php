@@ -8,7 +8,13 @@ class Priority
     private ?string $value;
 
     // Méthode pour récupérer la valeur de priorité
-    public function getPriorityValue() {
+    public function getPriorityValue()
+    {
         return $this->value;
+    }
+
+    public function getId()
+    {
+        return $this->id_priority;
     }
 }

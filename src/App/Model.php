@@ -74,11 +74,26 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('status'))[0];
     }
 
+    public function getAll($entity)
+    {
+        $query = $this->query("select * from $entity");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
+    }
+
     // Méthode pour récupérer un attribut spécifique en fonction d'un autre attribut dans une table
     public function getAttributeByAttribute($entity, $attribute, $byAttribute, $value, $comp = '=')
     {
         $query = $this->query("SELECT $attribute FROM $entity WHERE $byAttribute $comp '$value'");
         return $query->fetchColumn();
+    }
+    // Méthode
+    public function getParticipantsByproject($projectId)
+    {
+        $query = $this->query("SELECT *
+                                    FROM users u
+                                    JOIN participate pa ON u.user_id = pa.user_id
+                                    WHERE pa.id = $projectId");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('users'));
     }
 
     // Méthode pour récupérer les projets associés à un utilisateur via la table de liaison 'participate'
@@ -89,16 +104,6 @@ class Model extends PDO
                                 JOIN participate pa ON p.id = pa.id
                                 WHERE pa.user_id = $userId");
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('project'));
-    }
-
-    // Méthode
-    public function getParticipantsByproject($projectId)
-    {
-        $query = $this->query("SELECT *
-                                FROM users u
-                                JOIN participate pa ON u.user_id = pa.user_id
-                                WHERE pa.id = $projectId");
-        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('users'));
     }
 
     // Insére de nouvelles données dans une table de la base de données
@@ -166,7 +171,7 @@ class Model extends PDO
             }
             $i++;
         }
-        $sql = $sql . " WHERE ".$attribute." ='$id'";
+        $sql = $sql . " WHERE " . $attribute . " ='$id'";
         $preparedRequest = $this->prepare($sql);
         $preparedRequest->execute($preparedDatas);
     }
