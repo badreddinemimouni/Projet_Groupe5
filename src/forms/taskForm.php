@@ -44,23 +44,24 @@ class taskForm
         // Validation des données du formulaire
         $error = [];
         if (!isset($_POST['task_title']) || strlen($_POST['task_title']) < 3) {
-        if (!isset($_POST['task_title']) || strlen($_POST['task_title']) < 3) {
-            $error[] = 'Le titre de la tâche doit comporter au moins 3 caractères';
-        }
-        if (!isset($_POST['user_assigned'])) {
-            $error[] = 'Vous devez selectionné un utilisateur';
-        }
-        if (!isset($_POST['task_priority'])) {
-            $error[] = 'La priorité de la tâche doit être égale à Haute, Moyenne ou Faible.';
-        }
-        if (!isset($_POST['task_description']) || strlen($_POST['task_description']) < 5) {
-            $error[] = 'La description de la tâche doit comporter au moins 3 caractères';
-        }
+            if (!isset($_POST['task_title']) || strlen($_POST['task_title']) < 3) {
+                $error[] = 'Le titre de la tâche doit comporter au moins 3 caractères';
+            }
+            if (!isset($_POST['user_assigned'])) {
+                $error[] = 'Vous devez selectionné un utilisateur';
+            }
+            if (!isset($_POST['task_priority'])) {
+                $error[] = 'La priorité de la tâche doit être égale à Haute, Moyenne ou Faible.';
+            }
+            if (!isset($_POST['task_description']) || strlen($_POST['task_description']) < 5) {
+                $error[] = 'La description de la tâche doit comporter au moins 3 caractères';
+            }
 
-        // Vérification des erreurs
-        if (count($error) > 0) {
-            return $error; // Retourne les erreurs si elles existent
+            // Vérification des erreurs
+            if (count($error) > 0) {
+                return $error; // Retourne les erreurs si elles existent
+            }
+            return true; // Retourne true si aucune erreur n'est détectée
         }
-        return true; // Retourne true si aucune erreur n'est détectée
     }
 }

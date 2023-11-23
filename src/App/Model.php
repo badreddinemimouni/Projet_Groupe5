@@ -74,6 +74,15 @@ class Model extends PDO
         $query = $this->query("SELECT $attribute FROM $entity WHERE $byAttribute $comp '$value'");
         return $query->fetchColumn();
     }
+    // Méthode
+    public function getParticipantsByproject($projectId)
+    {
+        $query = $this->query("SELECT *
+                                    FROM users u
+                                    JOIN participate pa ON u.user_id = pa.user_id
+                                    WHERE pa.id = $projectId");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('users'));
+    }
 
     // Méthode pour récupérer les projets associés à un utilisateur via la table de liaison 'participate'
     public function getProjectByParticipateUserId($userId)
