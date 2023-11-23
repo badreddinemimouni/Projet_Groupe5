@@ -4,8 +4,10 @@ namespace Tp\Project\Forms;
  
 class adminForm
 {
+    
     public static function form($action)
     {
+        // Formulaire pour affecter un utilisateur à un projet
         $form = "<form action= $action method='POST'>
         <label for='assign_user'>Ajouter un utilisateur au projet</label>
         <input type='text' name='assign_user' class='form' autocomplete='assign_user' required autofocus>
@@ -20,9 +22,10 @@ class adminForm
 
     public static function validateFormAdmin()
     {
+        // Validation des données du formulaire
         if (isset($_POST['']) && strlen($_POST['']) < 3) {
-            return $error = '';
+            return $error = ''; // Retourne une erreur si il y a une chaîne vide
         }
-        return true;
+        return true; // Retourne true si aucune erreur n'est détectée
     }
 }

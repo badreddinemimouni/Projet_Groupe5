@@ -2,12 +2,11 @@
  
 namespace Tp\Project\Forms;
  
-// use Tp\Project\Forms;
- 
 class taskForm
 {
     public static function form($action)
     {
+        // Formulaire de création de tâche
         $form = "<form action=$action method='POST'>
         <label for='task_title'>Nom de la tâche</label>
         <input type='text' name='task_title' class='form' autocomplete='task_title' required autofocus>
@@ -31,6 +30,7 @@ class taskForm
 
     public static function validateFormTask()
     {
+        // Validation des données du formulaire
         $error = [];
         if (isset($_POST['task_title']) && strlen($_POST['task_title']) < 3) {
             $error[] = 'Le titre de la tâche doit comporter au moins 3 caractères';
@@ -42,9 +42,10 @@ class taskForm
             $error[] = 'La description de la tâche doit comporter au moins 3 caractères';
         }
 
+        // Vérification des erreurs
         if (count($error) > 0) {
-            return $error;
+            return $error; // Retourne les erreurs si elles existent
         }
-        return true;
+        return true; // Retourne true si aucune erreur n'est détectée
     }
 }
