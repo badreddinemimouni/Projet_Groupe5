@@ -47,7 +47,7 @@ class taskForm
             $error[] = 'Le titre de la tâche doit comporter au moins 3 caractères';
         }
         if (!isset($_POST['user_assigned'])) {
-            $error[] = 'Vous devez selectionné un utilisateur';
+            $error[] = 'Vous devez selectionner un utilisateur';
         }
         if (!isset($_POST['task_priority'])) {
             $error[] = 'La priorité de la tâche doit être égale à Haute, Moyenne ou Faible.';

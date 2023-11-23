@@ -48,7 +48,6 @@ class loginForm
                 }
             }
         }
-
         return $error; // Retourne une erreur si l'authentification échoue
     }
 }

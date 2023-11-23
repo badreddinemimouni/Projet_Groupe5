@@ -20,7 +20,7 @@ class projectForm
     public static function validateFormProject()
     {
         // Validation des données du formulaire
-        if (isset($_POST['project']) && strlen($_POST['project']) < 3) {
+        if (!isset($_POST['project']) || strlen($_POST['project']) < 3) {
             return $error = 'Le titre du projet doit comporter au moins 3 caractères';
         }
         return true;

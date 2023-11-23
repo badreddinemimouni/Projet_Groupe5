@@ -71,7 +71,7 @@ class TaskController extends AbstractController
         $validationMessages = updateTaskForm::validateUpdateFormTask();
         if ($validationMessages === true) {
             $datas = [
-                // Récupére les valeurs des champs distincts du formulaire par rapport au colonne de la table 'tasks'
+                // Récupére les valeurs des champs distincts du formulaire par rapport à la colonne de la table 'tasks'
                 'title' => $_POST['task_title'],
                 'id_priority' => $_POST['task_priority'],
                 'description' => $_POST['task_description'],

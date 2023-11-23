@@ -25,14 +25,14 @@ class registrationForm
     {
         // Validation des données du formulaire
         $error = [];
-        if (isset($_POST['username']) && strlen($_POST['username']) < 5) {
+        if (!isset($_POST['username']) || strlen($_POST['username']) < 5) {
             $error[] = 'Le nom d\'utilisateur doit comporter 5 caractères';
         }
-        if (isset($_POST['username']) && strlen($_POST['username']) < 5) {
+        if (!isset($_POST['username']) || strlen($_POST['username']) < 5) {
             $error[] = 'Le mot de passe doit comporter 5 caractères';
         }
 
-        if (isset($_POST['password']) && isset($_POST['confirm-password']) && ($_POST['password'] !== $_POST['confirm-password'])) {
+        if (!isset($_POST['password']) || isset($_POST['confirm-password']) || ($_POST['password'] !== $_POST['confirm-password'])) {
             $error[] = 'Les mots de passe doivent être identiques';
         }
 
