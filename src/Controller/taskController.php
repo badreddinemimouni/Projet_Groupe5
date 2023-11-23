@@ -65,9 +65,13 @@ class TaskController extends AbstractController
     // Méthode pour mettre à jour le statut d'une tâche
     public function updateTask()
     {
+        $id_task = $_POST['id_task'];
+        echo $id_task;
+        $task = Model::getInstance()->getOneByAttribute('task', 'id_task', $id_task);
+        echo $task->getProjectId();
         // paramètres dans le formulaire
-        $id_task = $_GET['id_task'];
-        if (isset($_POST['task_title'], $_POST['id_task'], $_POST['task_priority'], $_POST['task_description'], $_POST['user_assigned'])) {
+        if (isset($_POST['task_title'], $_POST['id_task'], $_POST['task_priority'], $_POST['task_description'], $_POST['user_assigned'])) 
+        {
             $task_title = $_POST['task_title'];
             $task_priority = $_POST['task_priority'];
             $task_description = $_POST['task_description'];
@@ -76,11 +80,12 @@ class TaskController extends AbstractController
                 // Récupére les valeurs des champs distincts du formulaire
                 'title' => $_POST['task_title'],
                 'id_priority' => $_POST['task_priority'],
-                'task_description' => $_POST['task_description'],
-                'user_assigned' => $_POST['user_assigned'],
-                'task_status' => $_POST['task_status'],
+                'description' => $_POST['task_description'],
+                'user_id' => $_POST['user_assigned'],
+                'id_status' => $_POST['task_status'],
             ];
-            Model::getInstance()->updateById('task', ['id_task' => $id_task], $datas);
+            Model::getInstance()->updateByAttribute('task', 'id_task', $id_task, $datas);
+            Dispatcher::redirect('taskController', 'displayTasksByProject', ['id' => $task->getProjectId()]);
         }
         // Redirige vers la page précédente après la mise à jour
         //$this->redirect('taskController', 'displayTasksByProject');
