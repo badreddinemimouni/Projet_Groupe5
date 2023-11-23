@@ -48,6 +48,7 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
+
     public function getPriorityLabel($id)
     {
         $query = $this->query('select value from priority where id_priority=' . $id);
@@ -73,6 +74,15 @@ class Model extends PDO
                                 JOIN participate pa ON p.id = pa.id
                                 WHERE pa.user_id = $userId");
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('project'));
+    }
+
+    public function getParticipantsByproject($projectId)
+    {
+        $query = $this->query("SELECT * 
+                                FROM users u
+                                JOIN participate pa ON u.user_id = pa.user_id
+                                WHERE pa.id = $projectId");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('users'));
     }
 
     public function save($entity, $datas): void
