@@ -18,10 +18,12 @@
         $projectAdminId = $project->getIdAdmin();
         $isAdmin = $projectAdminId === $adminId;
         $participates = Model::getInstance()->getByAttribute('participate', 'id', $projectId);
-
+        // On Affiche chaque tache
         foreach ($participates as $participate) {
+            // Si l'user de la session participe au projet on lui montre les taches
             if ($participate->getUserId() === $userId) {
                 echo '<a href="' . Dispatcher::generateUrl('taskController', 'displayTasksByProject', ['id' => $project->getId()]) . '">Voir les tâches</a> <br><br> ';
+                // Si l'user est admin du projet on lui donne la possibilite d'ajouter un utilisateur
                 if ($isAdmin) {
                     echo '<a href="' . Dispatcher::generateUrl('adminController', 'registerFormAdmin', ['id' => $project->getId()]) . '">Ajouter un utilisateur</a> <br><br> ';
                 }

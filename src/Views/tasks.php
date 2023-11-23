@@ -20,7 +20,7 @@
     // Pour chaque tâche dans la liste de tâches ($tasks), exécute les instructions suivantes :
     foreach ($tasks as $task) {
         $isAssigned = $userId === $task->getUserId();
-
+        // On verifie si l'user de la session est admin du projet ou assigné à la tache pour lui afficher
         if ($isAdmin || $isAssigned) {
             // Affichage du titre de la tâche en utilisant la méthode getTitle()
             echo "Titre :" . $task->getTitle() . ' <br><br>';
@@ -32,7 +32,7 @@
             // Obtention du libellé de statut en fonction du statut de la tâche
             $status = Model::getInstance()->getStatusLabel($task->getStatus());
             echo "Statut : " . $status->getStatusValue() . ' <br><br>';
-
+            // On vérifie si l'user de la session est admin du projet pour accéder a la page de modification de la tache
             if ($isAdmin) {
                 echo '<a href="' . Dispatcher::generateUrl('taskController', 'UpdateFormTask', ['id_task' => $task->getId()]) . '"><button>Modifier</button></a><br><br>';
             }
