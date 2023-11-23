@@ -25,6 +25,7 @@ class registrationForm
     {
         // Validation des données du formulaire
         $error = [];
+       
         if (isset($_POST['username']) && strlen($_POST['username']) < 5) {
             $error[] = 'Le nom d\'utilisateur doit comporter 5 caractères';
         }

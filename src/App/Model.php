@@ -88,6 +88,7 @@ class Model extends PDO
     // Insére de nouvelles données dans une table de la base de données
     public function save($entity, $datas): void
     {
+        
         $sql = 'INSERT into ' . $entity . ' (';
         $count = count($datas) - 1;
         $preparedDatas = [];
@@ -101,7 +102,6 @@ class Model extends PDO
         }
         $sql .= ') VALUES (';
         $i = 0;
-        var_dump($datas);
         foreach ($datas as $data) {
             $preparedDatas[] = htmlspecialchars($data);
             $sql .= "?";
@@ -111,9 +111,12 @@ class Model extends PDO
             $i++;
         }
         $sql = $sql . ')';
-        var_dump($preparedDatas);
+
         $preparedRequest = $this->prepare($sql);
+        echo $sql;
         $preparedRequest->execute($preparedDatas);
+        
+
     }
 
     // Met à jour des données dans une table spécifique en fonction de l'ID fourni
