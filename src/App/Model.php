@@ -74,6 +74,12 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('status'))[0];
     }
 
+    public function getAll($entity)
+    {
+        $query = $this->query("select * from $entity");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
+    }
+
     // Méthode pour récupérer un attribut spécifique en fonction d'un autre attribut dans une table
     public function getAttributeByAttribute($entity, $attribute, $byAttribute, $value, $comp = '=')
     {
