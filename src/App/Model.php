@@ -116,15 +116,15 @@ class Model extends PDO
         }
         $sql .= ') VALUES (';
         $i = 0;
-        foreach ($datas as $data) {
-            $preparedDatas[] = htmlspecialchars($data);
-            $sql .= "?";
-            if ($i < $count) {
-                $sql = $sql . ', ';
-            }
-            $i++;
-        }
-        $sql = $sql . ')';
+        // foreach ($datas as $data) {
+        //     $preparedDatas[] = htmlspecialchars($data);
+        //     $sql .= "?";
+        //     if ($i < $count) {
+        //         $sql = $sql . ', ';
+        //     }
+        //     $i++;
+        // }
+        // $sql = $sql . ')';
 
         $preparedRequest = $this->prepare($sql);
         echo $sql;
