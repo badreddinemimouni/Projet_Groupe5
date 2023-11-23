@@ -23,8 +23,8 @@ class adminForm
     public static function validateFormAdmin()
     {
         // Validation des données du formulaire
-        if (isset($_POST['']) && strlen($_POST['']) < 3) {
-            return $error = ''; // Retourne une erreur si il y a une chaîne vide
+        if (!isset($_POST['assign_user']) || (strlen($_POST['assign_user']) < 3)) {
+            return $error = 'Le nom de l\'utilisateur doit comporter au moins 3 caractères'; // Retourne une erreur si il y a une chaîne vide
         }
         return true; // Retourne true si aucune erreur n'est détectée
     }
