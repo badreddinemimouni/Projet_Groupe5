@@ -22,6 +22,7 @@ class updateTaskForm
         $form = "<form action=$action method='POST'>
         <label for='task_title'>Nom de la tâche</label>
         <input type='text' name='task_title' value='" . $task->getTitle() . "'>
+        <input type='hidden' name='project_id' value='" . $projectId . "'>
         <input type='hidden' name='id_task' value='" . $task_id . "'>
         <label for='task_priority'>Priorité de la tâche</label>
         <select name='task_priority' class='form' autocomplete='task_status' required autofocus>";
