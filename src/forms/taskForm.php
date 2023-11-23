@@ -18,7 +18,7 @@ class taskForm
         <input type='hidden' name='project_id' value='" . $_GET['project_id'] . "'>
         <select name='task_priority' class='form' autocomplete='task_priority' required autofocus>
             <option value='1'>Haute</option>
-            <option value='2'>Moyenne</option>
+            <option value='2'>selected>Moyenne</option>
             <option value='3'>Faible</option>
         </select>
         <label for='task_description'>Description de la tâche</label>
@@ -42,13 +42,16 @@ class taskForm
     public static function validateFormTask()
     {
         $error = [];
-        if (isset($_POST['task_title']) && strlen($_POST['task_title']) < 3) {
+        if (!isset($_POST['task_title']) || strlen($_POST['task_title']) < 3) {
             $error[] = 'Le titre de la tâche doit comporter au moins 3 caractères';
         }
-        /* if (isset($_POST['task_priority']) && $_POST['task_priority'] < 3 && $_POST['task_priority'] >= 1) {
+        if (!isset($_POST['user_assigned'])) {
+            $error[] = 'Vous devez selectionné un utilisateur';
+        }
+        if (!isset($_POST['task_priority'])) {
             $error[] = 'La priorité de la tâche doit être égale à Haute, Moyenne ou Faible.';
-        } */
-        if (isset($_POST['task_description']) && strlen($_POST['task_description']) < 5) {
+        }
+        if (!isset($_POST['task_description']) || strlen($_POST['task_description']) < 5) {
             $error[] = 'La description de la tâche doit comporter au moins 3 caractères';
         }
 

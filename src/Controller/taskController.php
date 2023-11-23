@@ -23,47 +23,46 @@ class TaskController extends AbstractController
 
     public function createTask()
     {
+        $userId = $_SESSION['user_id'];
+        $userAdminId = Model::getInstance()->getAttributeByAttribute('admin', 'id_admin', 'user_id', $userId);
         $project_id = $_POST['project_id'];
+        $projectAdminId = Model::getInstance()->getAttributeByAttribute('project', 'id', 'id_admin', $userAdminId);
         $datas = [
             // Récupérer les valeurs des champs distincts du formulaire
             'title' => $_POST['task_title'],
             'description' => $_POST['task_description'],
             'id_priority' => $_POST['task_priority'],
-            'id_status' => 1,
+            'id_status' => 1, // Tache créé automatiquement définis sur status 1
             'user_id' => $_POST['user_assigned'],
             'project_id' => $_POST['project_id'],
         ];
-        $validationMessages = taskForm::validateFormTask();
-        if ($validationMessages === true) {
-            Model::getInstance()->save('task', $datas);
-            Dispatcher::redirect('taskController', 'displayTasksByProject', ['id' => $project_id]);
-        } else {
-            foreach ($validationMessages as $message) {
-                echo $message . '<br><br>';
+
+        // Verification que l'user est admin du projet
+        if ($userAdminId === $projectAdminId) {
+            $validationMessages = taskForm::validateFormTask();
+            if ($validationMessages === true) {
+                Model::getInstance()->save('task', $datas);
+                Dispatcher::redirect('taskController', 'displayTasksByProject', ['id' => $project_id]);
+            } else {
+                foreach ($validationMessages as $message) {
+                    echo $message . '<br><br>';
+                }
             }
+        } else {
+            echo "non autorisé à créer une tâche";
         }
     }
 
-    // Méthode pour mettre à jour l'état d'une tâche
-    /* public function updateTaskStatus()
-    {
-        $datas = [
-            'status' => $_GET['status'],
-        ];
-        $id_task = $_GET['id'];
-        Model::getInstance()->updateById('task', $id_task, $datas);
-    } */
-
     public function updateTaskStatus()
     {
-    if (isset($_POST['task_id'], $_POST['status'])) {
-        $id_task = $_POST['task_id'];
-        $new_status = $_POST['status'];
-        $datas = ['id_status' => $new_status];
-        Model::getInstance()->updateById('task', $id_task, $datas);
-    }
-    // Redirige vers la page précédente après la mise à jour
-    //$this->redirect('taskController', 'displayTasksByProject');
+        if (isset($_POST['task_id'], $_POST['status'])) {
+            $id_task = $_POST['task_id'];
+            $new_status = $_POST['status'];
+            $datas = ['id_status' => $new_status];
+            Model::getInstance()->updateById('task', $id_task, $datas);
+        }
+        // Redirige vers la page précédente après la mise à jour
+        //$this->redirect('taskController', 'displayTasksByProject');
     }
 
     // Méthode pour supprimer une tâche
