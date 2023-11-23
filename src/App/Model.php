@@ -58,6 +58,7 @@ class Model extends PDO
     {
         $query = $this->query("SELECT $attribute FROM $entity WHERE $byAttribute $comp '$value'");
         return $query->fetchColumn();
+    }
     // Méthode spécifique pour récupérer le label de priorité en fonction de son ID
     public function getPriorityLabel($id)
     {
@@ -78,12 +79,6 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
-    // Méthode pour récupérer un attribut spécifique en fonction d'un autre attribut dans une table
-    public function getAttributeByAttribute($entity, $attribute, $byAttribute, $value, $comp = '=')
-    {
-        $query = $this->query("SELECT $attribute FROM $entity WHERE $byAttribute $comp '$value'");
-        return $query->fetchColumn();
-    }
     // Méthode
     public function getParticipantsByproject($projectId)
     {
@@ -184,3 +179,4 @@ class Model extends PDO
         $this->exec($sql);
     }
 }
+

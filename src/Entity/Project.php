@@ -19,12 +19,8 @@ class Project
     {
         return $this->id;
     }
-<<<<<<<<< Temporary merge branch 1
     public function getIdAdmin()
     {
         return $this->id_admin;
     }
 }
-=========
-}
->>>>>>>>> Temporary merge branch 2

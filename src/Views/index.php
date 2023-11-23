@@ -5,9 +5,8 @@
     <?php
     // Inclusion du fichier 'header.php' pour afficher l'en-tête de la page
     include_once(__DIR__ . './header.php');
-<<<<<<<<< Temporary merge branch 1
-    echo "Bienvenue sur notre moche site !"
-=========
+    echo "Bienvenue sur notre moche site !";
+
 
     // Vérification de la présence d'une vue à afficher
     if ($view === null) {
@@ -18,7 +17,6 @@
 
     // Inclusion du fichier de vue principal à afficher dans la balise body
     include_once(__DIR__ . $main);
->>>>>>>>> Temporary merge branch 2
     ?>
 </body>
 
