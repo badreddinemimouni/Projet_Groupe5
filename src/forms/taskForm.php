@@ -44,6 +44,7 @@ class taskForm
         // Validation des données du formulaire
         $error = [];
         if (!isset($_POST['task_title']) || strlen($_POST['task_title']) < 3) {
+        if (!isset($_POST['task_title']) || strlen($_POST['task_title']) < 3) {
             $error[] = 'Le titre de la tâche doit comporter au moins 3 caractères';
         }
         if (!isset($_POST['user_assigned'])) {

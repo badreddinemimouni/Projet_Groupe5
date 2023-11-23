@@ -6,6 +6,7 @@ namespace Tp\Project\Controller;
 use Tp\Project\App\Model;
 use Tp\Project\App\AbstractController;
 use Tp\Project\Forms\TaskForm;
+use Tp\Project\Forms\updateTaskForm;
 use Tp\Project\App\Dispatcher;
 
 class TaskController extends AbstractController
@@ -53,13 +54,43 @@ class TaskController extends AbstractController
         }
     }
 
-    public function updateTaskStatus()
+    // Méthode pour afficher le formulaire d'actualisation d'une nouvelle tâche
+    public function UpdateFormTask(): void
     {
-        if (isset($_POST['task_id'], $_POST['status'])) {
-            $id_task = $_POST['task_id'];
-            $new_status = $_POST['status'];
-            $datas = ['id_status' => $new_status];
-            Model::getInstance()->updateById('task', $id_task, $datas);
+        $vars = [
+            'form' => updateTaskForm::form('?controller=taskController&method=updateTask'),
+        ];
+        $this->render('updatetask.php', $vars);
+    }
+
+    // Méthode pour afficher le formulaire d'actualisation d'une nouvelle tâche
+    public function UpdateFormTask(): void
+    {
+        $vars = [
+            'form' => updateTaskForm::form('?controller=taskController&method=updateTask'),
+        ];
+        $this->render('updatetask.php', $vars);
+    }
+
+    // Méthode pour mettre à jour le statut d'une tâche
+    public function updateTask()
+    {
+        // paramètres dans le formulaire
+        $id_task = $_GET['id_task'];
+        if (isset($_POST['task_title'], $_POST['id_task'], $_POST['task_priority'], $_POST['task_description'], $_POST['user_assigned'])) {
+            $task_title = $_POST['task_title'];
+            $task_priority = $_POST['task_priority'];
+            $task_description = $_POST['task_description'];
+            $user_assigned = $_POST['user_assigned'];
+            $datas = [
+                // Récupére les valeurs des champs distincts du formulaire
+                'title' => $_POST['task_title'],
+                'id_priority' => $_POST['task_priority'],
+                'task_description' => $_POST['task_description'],
+                'user_assigned' => $_POST['user_assigned'],
+                'task_status' => $_POST['task_status'],
+            ];
+            Model::getInstance()->updateById('task', ['id_task' => $id_task], $datas);
         }
         // Redirige vers la page précédente après la mise à jour
         //$this->redirect('taskController', 'displayTasksByProject');
