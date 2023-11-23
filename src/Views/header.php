@@ -11,7 +11,7 @@ use Tp\Project\App\Security;
         <ul class="">
             <!-- Crée un lien vers la page d'accueil -->
             <li class=""><a class="nav-link text-light" href="<?php echo Dispatcher::generateUrl('IndexController', 'index'); ?>">Accueil</a></li>
-            <!-- Vérifie si l'utilisateur est connecté -->
+            <!-- Vérifie si l'utilisateur n'est connecté -->
             <?php if (!Security::is_connected()) { ?>
                 <!-- Affiche des liens pour se connecter et s'enregistrer -->
                 <li class=""><a class="nav-link text-light" href="<?php echo Dispatcher::generateUrl('usersController', 'connectUser'); ?>">Se connecter</a></li>

@@ -18,7 +18,9 @@ class updateTaskForm
         $status = Model::getInstance()->getAll('status');
         $priorities = Model::getInstance()->getAll('priority');
         $userId = $task->getUserId();
+
         // Formulaire d'actualisation de tâche
+
         $form = "<form action=$action method='POST'>
         <label for='task_title'>Nom de la tâche</label>
         <input type='text' name='task_title' value='" . $task->getTitle() . "'>
@@ -26,7 +28,9 @@ class updateTaskForm
         <input type='hidden' name='id_task' value='" . $task_id . "'>
         <label for='task_priority'>Priorité de la tâche</label>
         <select name='task_priority' class='form' autocomplete='task_status' required autofocus>";
+        // Affichage de chaque propriété possible
         foreach ($priorities as $priority) {
+            // Ajouter la propriété select si la propriété correspond a celle de la tache
             $form .= "<option value=" . $priority->getId() . ($priority->getId() === $task_priority ? ' selected' : '') . ">" . $priority->getPriorityValue() . "</option>";
         }
 
@@ -35,14 +39,18 @@ class updateTaskForm
         <input type='text' name='task_description' value='" . $task->getDescription() . "' class='form' autocomplete='task_description' required autofocus>
         <label for='task_status'>Status</label>
         <select name='task_status' class='form' autocomplete='task_status' required autofocus>";
+        // Affichage de chaque statut possible 
         foreach ($status as $state) {
+            // Ajouter la propriété select si le statut correspond a celui de la tache
             $form .= "<option value=" . $state->getId() . ($state->getId() === $taskStatus ? ' selected' : '') . ">" . $state->getStatusValue() . "</option>";
         }
 
         $form .= "</select>
         <label for='user_assigned'>Affecter un utilisateur</label>
         <select name='user_assigned' class='form' autocomplete='user_assigned' required autofocus>";
+        // Affichage de chaque users qui participent au projet 
         foreach ($projectUsers as $projectUser) {
+            // Ajouter la propriété select si l'user est attitré à cette tache
             $form .= "<option value=" . $projectUser->getUserId() . ($projectUser->getUserId() === $userId ? ' selected' : '') . ">" . $projectUser->getLogin() . "</option>";
         }
 

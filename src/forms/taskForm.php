@@ -9,33 +9,48 @@ class taskForm
 {
     public static function form($action)
     {
+        // return $form;
         $projectId = $_GET['project_id'];
         $projectUsers = Model::getInstance()->getParticipantsByproject($projectId);
-        $form = "<form action='$action' method='POST'>
+        $status = Model::getInstance()->getAll('status');
+        $priorities = Model::getInstance()->getAll('priority');
+
+        // Formulaire d'actualisation de tâche
+
+        $form = "<form action=$action method='POST'>
         <label for='task_title'>Nom de la tâche</label>
         <input type='text' name='task_title' class='form' autocomplete='task_title' required autofocus>
+        <input type='hidden' name='project_id' value='" . $projectId . "'>
         <label for='task_priority'>Priorité de la tâche</label>
-        <input type='hidden' name='project_id' value='" . $_GET['project_id'] . "'>
-        <select name='task_priority' class='form' autocomplete='task_priority' required autofocus>
-            <option value='1'>Haute</option>
-            <option value='2'>selected>Moyenne</option>
-            <option value='3'>Faible</option>
-        </select>
+        <select name='task_priority' class='form' autocomplete='task_status' required autofocus>";
+        // Affichage de chaque propriété possible
+        foreach ($priorities as $priority) {
+            $form .= "<option value=" . $priority->getId() . ">" . $priority->getPriorityValue() . "</option>";
+        }
+
+        $form .= "</select>
         <label for='task_description'>Description de la tâche</label>
         <input type='text' name='task_description' class='form' autocomplete='task_description' required autofocus>
+        <label for='task_status'>Status</label>
+        <select name='task_status' class='form' autocomplete='task_status' required autofocus>";
+        // Affichage de chaque statut possible 
+        foreach ($status as $state) {
+            $form .= "<option value=" . $state->getId() . ">" . $state->getStatusValue() . "</option>";
+        }
+
+        $form .= "</select>
         <label for='user_assigned'>Affecter un utilisateur</label>
         <select name='user_assigned' class='form' autocomplete='user_assigned' required autofocus>";
-
+        // Affichage de chaque users qui participent au projet 
         foreach ($projectUsers as $projectUser) {
             $form .= "<option value=" . $projectUser->getUserId() . ">" . $projectUser->getLogin() . "</option>";
         }
 
         $form .= "</select>
-            <button class='btn btn-lg btn-primary' type='submit' name='submit'>
-                Créer ma tâche
+        <button class='btn btn-lg btn-primary' type='submit' name='submit'>
+                Ajouter la tâche
             </button>
         </form>";
-
         return $form;
     }
 
