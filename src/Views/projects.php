@@ -4,7 +4,6 @@
     use Tp\Project\App\Dispatcher;
     use Tp\Project\App\Model;
 
-<<<<<<<<< Temporary merge branch 1
     echo '<a href="' . Dispatcher::generateUrl('projectController', 'registerFormProject') . '">Ajouter un projet</a><br><br>';
     foreach ($projects as $project) {
         echo 'Titre : ' . $project->getName() . ' ';
@@ -17,7 +16,6 @@
             }
         }
         echo '<a href="' . Dispatcher::generateUrl('taskController', 'displayTasksByProject', ['id' => $project->getId()]) . '">Voir les tâches</a> <br><br> ';
-=========
     // Lien pour ajouter un nouveau projet
     echo '<a href="' . Dispatcher::generateUrl('projectController', 'registerFormProject') . '">Ajouter un projet</a>';
 
@@ -28,7 +26,6 @@
         
         // Lien pour voir les tâches liées à ce projet spécifique
         echo '<a href="' . Dispatcher::generateUrl('taskController', 'displayTasksByProject', ['id' => $project->getId()]) . '">Voir les tâches</a>';
->>>>>>>>> Temporary merge branch 2
     }
     ?>
 </main>
