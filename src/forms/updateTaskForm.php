@@ -9,14 +9,16 @@ class updateTaskForm
     public static function form($action)
     {
         $task_id = $_GET['id_task'];
-        $tasks = Model::getInstance()->getByAttribute('task', 'id_task' ,$task_id);
+        $tasks = Model::getInstance()->getByAttribute('task', 'id_task', $task_id);
         $task = $tasks[0]; // prend le 1er objet du tableau
+        $projectId = $task->getProjectId();
+        $projectUsers = Model::getInstance()->getParticipantsByproject($projectId);
         $task_priority = $task->getPriority();
         // Formulaire d'actualisation de tâche
         $form = "<form action=$action method='POST'>
         <label for='task_title'>Nom de la tâche</label>
         <input type='text' name='task_title' value='" . $task->getTitle() . "'>
-        <input type='hidden' name='id_task' value='".$task_id."'>
+        <input type='hidden' name='id_task' value='" . $task_id . "'>
         <label for='task_priority'>Priorité de la tâche</label>
         <select name='task_priority' class='form' autocomplete='task_priority' required autofocus>
         <option value='1' " . ($task_priority === 1 ? 'selected' : '') . ">Haute</option>
@@ -28,11 +30,16 @@ class updateTaskForm
         <label for='task_status'>Statut de la tâche</label>
         <input type='text' name='task_status' value='" . $task->getStatus() . "' class='form' autocomplete='task_status' required autofocus>
         <label for='user_assigned'>Affecter un utilisateur</label>
-        <input type='text' name='user_assigned' class='form' autocomplete='user_assigned' required autofocus>
+        <select name='user_assigned' class='form' autocomplete='user_assigned' required autofocus>";
+        foreach ($projectUsers as $projectUser) {
+            $form .= "<option value=" . $projectUser->getUserId() . ($task_priority === 1 ? ' selected' : '') . ">" . $projectUser->getLogin() . "</option>";
+        }
+
+        $form .= "</select>
         <button class='btn btn-lg btn-primary' type='submit' name='submit' value='" . $task->getUserId() . "'>
-            Actualiser ma tâche
-        </button>
-    </form>";
+                Créer ma tâche
+            </button>
+        </form>";
         return $form;
     }
 

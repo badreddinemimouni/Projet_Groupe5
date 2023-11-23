@@ -100,16 +100,6 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('project'));
     }
 
-    // Méthode
-    public function getParticipantsByproject($projectId)
-    {
-        $query = $this->query("SELECT *
-                                FROM users u
-                                JOIN participate pa ON u.user_id = pa.user_id
-                                WHERE pa.id = $projectId");
-        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('users'));
-    }
-
     // Insére de nouvelles données dans une table de la base de données
     public function save($entity, $datas): void
     {
@@ -175,7 +165,7 @@ class Model extends PDO
             }
             $i++;
         }
-        $sql = $sql . " WHERE ".$attribute." ='$id'";
+        $sql = $sql . " WHERE " . $attribute . " ='$id'";
         $preparedRequest = $this->prepare($sql);
         $preparedRequest->execute($preparedDatas);
     }
