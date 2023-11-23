@@ -65,25 +65,38 @@ class TaskController extends AbstractController
     // Méthode pour mettre à jour le statut d'une tâche
     public function updateTask()
     {
+        $userId = $_SESSION['user_id'];
+        $userAdminId = Model::getInstance()->getAttributeByAttribute('admin', 'id_admin', 'user_id', $userId);
         $id_task = $_POST['id_task'];
         $task = Model::getInstance()->getOneByAttribute('task', 'id_task', $id_task);
-        // paramètres dans le formulaire
-        $validationMessages = updateTaskForm::validateUpdateFormTask();
-        if ($validationMessages === true) {
-            $datas = [
-                // Récupére les valeurs des champs distincts du formulaire par rapport à la colonne de la table 'tasks'
-                'title' => $_POST['task_title'],
-                'id_priority' => $_POST['task_priority'],
-                'description' => $_POST['task_description'],
-                'user_id' => $_POST['user_assigned'],
-                'id_status' => $_POST['task_status'],
-            ];
-            Model::getInstance()->updateByAttribute('task', 'id_task', $id_task, $datas);
-            Dispatcher::redirect('taskController', 'displayTasksByProject', ['id' => $task->getProjectId()]);
-        } else {
-            foreach ($validationMessages as $message) {
-                echo $message . '<br><br>';
+        $projectId = $task->getProjectId();
+        $project = Model::getInstance()->getOneByAttribute('project', 'id', $projectId);
+        $projectAdmin = $project->getIdAdmin();
+
+        // Verification que l'utilisateur de la session est admin du projet
+        if ($projectAdmin === $userAdminId) {
+            $validationMessages = updateTaskForm::validateUpdateFormTask();
+            // verificaiton que le formulaire est rempli correctement
+            if ($validationMessages === true) {
+                $datas = [
+                    // Récupére les valeurs des champs distincts du formulaire
+                    'title' => $_POST['task_title'],
+                    'id_priority' => $_POST['task_priority'],
+                    'description' => $_POST['task_description'],
+                    'user_id' => $_POST['user_assigned'],
+                    'id_status' => $_POST['task_status'],
+                ];
+                // update de la tache
+                Model::getInstance()->updateByAttribute('task', 'id_task', $id_task, $datas);
+                // redirection vers les taches du projet
+                Dispatcher::redirect('taskController', 'displayTasksByProject', ['id' => $task->getProjectId()]);
+            } else {
+                foreach ($validationMessages as $message) {
+                    echo $message . '<br><br>';
+                }
             }
+        } else {
+            echo "vous n'avez pas les droits";
         }
     }
 

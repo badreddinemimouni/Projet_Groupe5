@@ -24,7 +24,7 @@ class Task
     {
         return $this->project_id;
     }
-    
+
     // Méthode pour récupérer la priorité de la tâche
     public function getPriority()
     {
