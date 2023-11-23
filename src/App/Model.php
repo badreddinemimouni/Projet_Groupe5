@@ -54,6 +54,12 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
+    public function getOneByAttribute($entity, $attribute, $value, $comp = '=')
+    {
+        $query = $this->query("SELECT * FROM $entity WHERE $attribute $comp '$value'");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity))[0];
+    }
+
     // Méthode spécifique pour récupérer le label de priorité en fonction de son ID
     public function getPriorityLabel($id)
     {
@@ -83,6 +89,16 @@ class Model extends PDO
                                 JOIN participate pa ON p.id = pa.id
                                 WHERE pa.user_id = $userId");
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('project'));
+    }
+
+    // Méthode
+    public function getParticipantsByproject($projectId)
+    {
+        $query = $this->query("SELECT *
+                                FROM users u
+                                JOIN participate pa ON u.user_id = pa.user_id
+                                WHERE pa.id = $projectId");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst('users'));
     }
 
     // Insére de nouvelles données dans une table de la base de données
@@ -132,6 +148,25 @@ class Model extends PDO
             $i++;
         }
         $sql = $sql . " WHERE id='$id'";
+        $preparedRequest = $this->prepare($sql);
+        $preparedRequest->execute($preparedDatas);
+    }
+
+    public function updateByAttribute($entity, $attribute, $id, $datas): void
+    {
+        $sql = 'UPDATE ' . $entity . ' SET ';
+        $count = count($datas) - 1;
+        $preparedDatas = [];
+        $i = 0;
+        foreach ($datas as $key => $value) {
+            $preparedDatas[] = htmlspecialchars($value);
+            $sql .= $key . " = ?";
+            if ($i < $count) {
+                $sql = $sql . ', ';
+            }
+            $i++;
+        }
+        $sql = $sql . " WHERE ".$attribute." ='$id'";
         $preparedRequest = $this->prepare($sql);
         $preparedRequest->execute($preparedDatas);
     }

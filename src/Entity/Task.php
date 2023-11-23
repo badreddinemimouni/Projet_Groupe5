@@ -18,6 +18,12 @@ class Task
     {
         return $this->id_task;
     }
+
+    // Méthode pour récupérer le projet de la tâche
+    public function getProjectId()
+    {
+        return $this->project_id;
+    }
     
     // Méthode pour récupérer la priorité de la tâche
     public function getPriority()

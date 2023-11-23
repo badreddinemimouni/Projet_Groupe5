@@ -7,6 +7,7 @@ use Tp\Project\App\Model;
 
 class taskForm
 {
+    // Formulaire pour créer une tâche
     public static function form($action)
     {
         $projectId = $_GET['project_id'];
@@ -62,5 +63,6 @@ class taskForm
             return $error; // Retourne les erreurs si elles existent
         }
         return true; // Retourne true si aucune erreur n'est détectée
+        }
     }
 }
