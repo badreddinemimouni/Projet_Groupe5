@@ -86,10 +86,11 @@ class Model extends PDO
         $query = $this->query("SELECT $attribute FROM $entity WHERE $byAttribute $comp '$value'");
         return $query->fetchColumn();
     }
+    
     // Méthode
     public function getParticipantsByproject($projectId)
     {
-        $query = $this->query("SELECT *
+        $query = $this->query("SELECT u.user_id, u.login
                                     FROM users u
                                     JOIN participate pa ON u.user_id = pa.user_id
                                     WHERE pa.id = $projectId");
