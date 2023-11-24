@@ -44,8 +44,8 @@ class ProjectController extends AbstractController
 
 
         // Validation du formulaire de création de projet
-        $validationMessages = projectForm::validateFormProject();
-        if ($validationMessages === true) {
+        $validationMessage = projectForm::validateFormProject();
+        if ($validationMessage === true) {
             // Préparation des données pour créer le projet
             $datas = [
                 'name' => $_POST['project'],
@@ -68,12 +68,8 @@ class ProjectController extends AbstractController
             // Redirection vers l'affichage des projets de l'utilisateur connecté
             Dispatcher::redirect('projectController', 'displayProjectsByUserId');
         } else {
-            // Il y a des erreurs de validation, affichez-les
-            foreach ($validationMessages as $message) {
-                echo $message . '<br><br>';
-            }
-            // Redirigez ou effectuez d'autres actions en fonction de votre logique
-            // Dispatcher::redirect('projectController', 'displayProjectsByUserId');
+            // Il y a une erreur de validation, affichez-la
+            echo $validationMessage . '<br><br>';
         }
     }
 

@@ -21,24 +21,16 @@ class projectForm
 
     public static function validateFormProject()
     {
-        $error = [];
-
         // Validation de la longueur du titre du projet
         if (!isset($_POST['project']) || strlen($_POST['project']) < 3) {
-            $error[] = 'Le titre du projet doit comporter au moins 3 caractères';
+            return $error = 'Le titre du projet doit comporter au moins 3 caractères';
         } else {
             // Vérification de l'existence du projet
             $projectExists = Model::getInstance()->getByAttribute('project', 'name', ($_POST['project']));
             if ($projectExists) {
-                $error[] = 'Projet déjà existant';
+                return $error = 'Projet déjà existant';
             }
         }
-
-        // Vérification des erreurs
-        if (count($error) > 0) {
-            return $error; // Retourne les erreurs si elles existent
-        }
-
         return true; // Retourne true si aucune erreur n'est détectée
     }
 }
