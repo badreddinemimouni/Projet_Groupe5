@@ -28,6 +28,7 @@
                     // Si l'user est admin du projet on lui donne la possibilite d'ajouter un utilisateur
                     if ($isAdmin) {
                         echo '<a href="' . Dispatcher::generateUrl('adminController', 'registerFormAdmin', ['id' => $project->getId()]) . '">Ajouter un utilisateur</a> <br><br> ';
+                        echo '<a href="' . Dispatcher::generateUrl('adminController', 'deleteProject', ['id_project' => $project->getId()]) . '">Supprimer le projet</a> <br><br> ';
                     }
                 }
             }

@@ -63,4 +63,31 @@ class AdminController extends AbstractController
             echo $message . '<br><br>';  
         }
     }
+
+    // Méthode pour delete un projet (et ses tâches)
+    public function deleteProject()
+    {
+        $userId = $_SESSION['user_id'];
+        $userAdminId = Model::getInstance()->getAttributeByAttribute('admin', 'id_admin', 'user_id', $userId);
+        $id_project = $_GET['id_project'];
+        $project = Model::getInstance()->getOneByAttribute('project', 'id', $id_project);
+        $projectAdminId = $project->getIdAdmin();
+        $isAdmin = $userAdminId === $projectAdminId;
+        if ($isAdmin) {
+            $tasks = Model::getInstance()->getByAttribute('task', 'project_id', 'id_project');
+            // s'il y a des tâches
+            if (!empty($tasks)) {
+                // Supprime les tâches
+                Model::getInstance()->deleteByAttribute('task', 'project_id', $id_project);               
+                }
+                //Supprime les partcicipants
+                Model::getInstance()->deleteByAttribute('participate', 'id', $id_project);
+                // Suprrime le projet
+                Model::getInstance()->deleteByAttribute('project', 'id', $id_project);
+                // redirection vers les projets
+                Dispatcher::redirect('projectController', 'displayProjectsByUserId');
+        } else {
+            echo "Suppression impossible";
+        }
+    }
 }
