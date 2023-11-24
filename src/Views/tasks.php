@@ -15,7 +15,9 @@
         $projectAdminId = $project->getIdAdmin();
         $isAdmin = $adminId === $projectAdminId;
 
-
+        if ($isAdmin) {
+            echo '<a href="' . Dispatcher::generateUrl('taskController', 'registerFormTask', ['project_id' => $projectId]) . '"><button>Créer une nouvelle tâche</button></a><br><br>';
+        }
 
         // Affichage d'un lien pour créer une nouvelle tâche associée à un projet spécifique, ce lien pointe vers la méthode 'registerFormTask' du contrôleur 'taskController'
         // Pour chaque tâche dans la liste de tâches ($tasks), exécute les instructions suivantes :
@@ -39,9 +41,6 @@
                     echo '<a href="' . Dispatcher::generateUrl('taskController', 'deleteTask', ['id_task' => $task->getId()]) . '"><button>Supprimer</button></a><br><br>';
                 }
             }
-        }
-        if ($isAdmin) {
-            echo '<a href="' . Dispatcher::generateUrl('taskController', 'registerFormTask', ['project_id' => $projectId]) . '"><button>Créer une nouvelle tâche</button></a><br><br>';
         }
     } else {
         Dispatcher::redirect('usersController', 'connectUser');
