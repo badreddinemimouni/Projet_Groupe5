@@ -103,8 +103,22 @@ class TaskController extends AbstractController
     // Méthode pour supprimer une tâche
     public function deleteTask()
     {
-        $id_task = $_GET['id'];
-        Model::getInstance()->deleteById('livre', $id_task);
+        $userId = $_SESSION['user_id'];
+        $userAdminId = Model::getInstance()->getAttributeByAttribute('admin', 'id_admin', 'user_id', $userId);
+        $id_task = $_GET['id_task'];
+        $task = Model::getInstance()->getOneByAttribute('task', 'id_task', $id_task);
+        $projectId = $task->getProjectId();
+        $project = Model::getInstance()->getOneByAttribute('project', 'id', $projectId);
+        $projectAdminId = $project->getIdAdmin();
+        $isAdmin = $userAdminId === $projectAdminId;
+        if ($isAdmin) {
+            // Suppression
+            Model::getInstance()->deleteByAttribute('task', 'id_task', $id_task);
+            // redirection vers les taches du projet
+            Dispatcher::redirect('taskController', 'displayTasksByProject', ['id' => $projectId]);
+        } else {
+            echo "Suppression impossible";
+        }
     }
 
     // Méthode pour afficher toutes les tâches associées à un projet

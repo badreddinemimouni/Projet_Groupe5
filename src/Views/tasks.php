@@ -36,7 +36,8 @@
                 echo "Statut : " . $status->getStatusValue() . ' <br><br>';
                 // On vérifie si l'user de la session est admin du projet pour accéder a la page de modification de la tache
                 if ($isAdmin) {
-                    echo '<a href="' . Dispatcher::generateUrl('taskController', 'UpdateFormTask', ['id_task' => $task->getId()]) . '"><button>Modifier</button></a><br><br>';
+                    echo '<a href="' . Dispatcher::generateUrl('taskController', 'UpdateFormTask', ['id_task' => $task->getId()]) . '"><button>Modifier</button></a><br>';
+                    echo '<a href="' . Dispatcher::generateUrl('taskController', 'deleteTask', ['id_task' => $task->getId()]) . '"><button>Supprimer</button></a><br><br>';
                 }
             }
         }

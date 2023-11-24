@@ -178,9 +178,9 @@ class Model extends PDO
     }
 
     // Supprime des données d'une table spécifique en fonction de l'ID fourni
-    public function deleteById($entity, $id): void
+    public function deleteByAttribute($entity, $attribute, $id): void
     {
-        $sql = "DELETE from $entity WHERE id = '$id'";
+        $sql = "DELETE from $entity WHERE $attribute = '$id'";
         $this->exec($sql);
     }
 }
