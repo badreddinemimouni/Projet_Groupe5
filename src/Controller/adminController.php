@@ -47,7 +47,7 @@ class AdminController extends AbstractController
                 // Si l'identifiant de l'utilisateur est récupéré avec succès, l'assigne au projet
                 if ($userId) {
                     $participateData = [
-                        'id' => $_POST['id'], // Identifiant du projet
+                        'id' => $_POST['id_project'], // Identifiant du projet
                         'user_id' => $userId, // Identifiant de l'utilisateur
                     ];
                     // Associe l'utilisateur au projet dans la table 'participate'

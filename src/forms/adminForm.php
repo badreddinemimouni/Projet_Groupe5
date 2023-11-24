@@ -19,6 +19,7 @@ class adminForm
             Ajouter au projet
         </button>
     </form>";
+        return $form;
     }
 
     public static function validateFormAdmin()
