@@ -26,12 +26,10 @@ class AdminController extends AbstractController
     {
         // Vérifier si les données du formulaire sont présentes
         $message = adminForm::validateFormAdmin();
-        if ($message === true)
-        {
-            {
+        if ($message === true) { {
                 // Récupère les données de l'utilisateur à partir du formulaire
                 $userData = Model::getInstance()->getByAttribute('users', 'login', $_POST['assign_user']);
-    
+
                 // Si l'utilisateur n'existe pas, crée le
                 if (empty($userData)) {
                     $userData = [
@@ -39,13 +37,13 @@ class AdminController extends AbstractController
                         'login' => $_POST['assign_user'],
                     ];
                     // Sauvegarde l'utilisateur dans la base de données
-                    $user = Model::getInstance()->save('users', $userData);
+                    $userData = Model::getInstance()->save('users', $userData);
                 }
-    
+
                 // Récupère l'identifiant de l'utilisateur
                 $userData = Model::getInstance()->getByAttribute('users', 'login', $_POST['assign_user']);
                 $userId = $userData[0]->getUserId();
-    
+
                 // Si l'identifiant de l'utilisateur est récupéré avec succès, l'assigne au projet
                 if ($userId) {
                     $participateData = [
@@ -55,12 +53,10 @@ class AdminController extends AbstractController
                     // Associe l'utilisateur au projet dans la table 'participate'
                     Model::getInstance()->save('participate', $participateData);
                     Dispatcher::redirect('projectController', 'displayProjectsByUserId');
-                }            
+                }
             }
-        } 
-        else 
-        {
-            echo $message . '<br><br>';  
+        } else {
+            echo $message . '<br><br>';
         }
     }
 
@@ -78,14 +74,14 @@ class AdminController extends AbstractController
             // s'il y a des tâches
             if (!empty($tasks)) {
                 // Supprime les tâches
-                Model::getInstance()->deleteByAttribute('task', 'project_id', $id_project);               
-                }
-                //Supprime les partcicipants
-                Model::getInstance()->deleteByAttribute('participate', 'id', $id_project);
-                // Suprrime le projet
-                Model::getInstance()->deleteByAttribute('project', 'id', $id_project);
-                // redirection vers les projets
-                Dispatcher::redirect('projectController', 'displayProjectsByUserId');
+                Model::getInstance()->deleteByAttribute('task', 'project_id', $id_project);
+            }
+            //Supprime les partcicipants
+            Model::getInstance()->deleteByAttribute('participate', 'id', $id_project);
+            // Suprrime le projet
+            Model::getInstance()->deleteByAttribute('project', 'id', $id_project);
+            // redirection vers les projets
+            Dispatcher::redirect('projectController', 'displayProjectsByUserId');
         } else {
             echo "Suppression impossible";
         }
