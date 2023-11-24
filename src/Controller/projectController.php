@@ -41,34 +41,40 @@ class ProjectController extends AbstractController
         $admin = Model::getInstance()->getByAttribute('admin', 'user_id', $userId);
         $adminId = $admin[0]->getId();
 
-        // Préparation des données pour créer le projet
-        $datas = [
-            'name' => $_POST['project'],
-            'id_admin' => $adminId
-        ];
+
 
         // Validation du formulaire de création de projet
-        $validationMessage = projectForm::validateFormProject();
-        if ($validationMessage === true) {
+        $validationMessages = projectForm::validateFormProject();
+        if ($validationMessages === true) {
+            // Préparation des données pour créer le projet
+            $datas = [
+                'name' => $_POST['project'],
+                'id_admin' => $adminId
+            ];
             // Sauvegarde du projet dans la base de données
             Model::getInstance()->save('project', $datas);
 
-            // Récupération de l'ID du projet nouvellement créé
-            $projectId = Model::getInstance()->getByAttribute('project', 'name', $projectName);
+            // Récupération de l'ID du projet 
+            $project = Model::getInstance()->getOneByAttribute('project', 'name', $projectName);
+            $projectId = $project->getId();
 
             // Ajout de l'utilisateur comme participant au projet
             $participateDatas = [
                 'id' => $projectId,
                 'user_id' => $userId,
             ];
+            // Sauvegarde de l'admin en tant que participant au projet
             Model::getInstance()->save('participate', $participateDatas);
-
             // Redirection vers l'affichage des projets de l'utilisateur connecté
             Dispatcher::redirect('projectController', 'displayProjectsByUserId');
         } else {
-            echo $validationMessage . '<br><br>';
+            // Il y a des erreurs de validation, affichez-les
+            foreach ($validationMessages as $message) {
+                echo $message . '<br><br>';
+            }
+            // Redirigez ou effectuez d'autres actions en fonction de votre logique
+            // Dispatcher::redirect('projectController', 'displayProjectsByUserId');
         }
-        Dispatcher::redirect('projectController', 'displayProjectsByUserId');
     }
 
     // Méthode pour afficher tous les projets associés à un utilisateur

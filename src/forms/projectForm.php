@@ -1,7 +1,9 @@
 <?php
- 
+
 namespace Tp\Project\Forms;
- 
+
+use Tp\Project\App\Model;
+
 class projectForm
 {
     public static function form($action)
@@ -19,10 +21,24 @@ class projectForm
 
     public static function validateFormProject()
     {
-        // Validation des données du formulaire
+        $error = [];
+
+        // Validation de la longueur du titre du projet
         if (!isset($_POST['project']) || strlen($_POST['project']) < 3) {
-            return $error = 'Le titre du projet doit comporter au moins 3 caractères';
+            $error[] = 'Le titre du projet doit comporter au moins 3 caractères';
+        } else {
+            // Vérification de l'existence du projet
+            $projectExists = Model::getInstance()->getByAttribute('project', 'name', ($_POST['project']));
+            if ($projectExists) {
+                $error[] = 'Projet déjà existant';
+            }
         }
-        return true;
+
+        // Vérification des erreurs
+        if (count($error) > 0) {
+            return $error; // Retourne les erreurs si elles existent
+        }
+
+        return true; // Retourne true si aucune erreur n'est détectée
     }
 }

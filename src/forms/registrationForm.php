@@ -2,6 +2,9 @@
 
 namespace Tp\Project\Forms;
 
+use Tp\Project\App\Model;
+
+
 class registrationForm
 {
     public static function form($action)
@@ -23,8 +26,16 @@ class registrationForm
 
     public static function validateFormRegistration()
     {
+
         // Validation des données du formulaire
         $error = [];
+        if (isset($_POST['username'])) {
+            // Verification que l'user nexiste pas deja
+            $isUserExist = Model::getInstance()->getByAttribute('users', 'login', $_POST['username']);
+            if ($isUserExist) {
+                $error[] = 'Utilisateur déja existant';
+            }
+        }
         if (!isset($_POST['username']) || strlen($_POST['username']) < 5) {
             $error[] = 'Le nom d\'utilisateur doit comporter 5 caractères';
         }
@@ -36,7 +47,7 @@ class registrationForm
         } elseif ($_POST['password'] !== $_POST['confirm-password']) {
             $error[] = 'Les mots de passe doivent être identiques';
         }
-        
+
         // Vérification des erreurs
         if (count($error) > 0) {
             return $error; // Retourne les erreurs si elles existent
