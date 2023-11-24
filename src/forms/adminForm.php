@@ -14,7 +14,7 @@ class adminForm
         <label for='id'>id</label>
         <input type='text' name='id' class='form' autocomplete='id' required autofocus>
         <button class='btn btn-lg btn-primary' type='submit' name='submit'>
-            Créer mon projet
+            Ajouter au projet
         </button>
     </form>";
         return $form;

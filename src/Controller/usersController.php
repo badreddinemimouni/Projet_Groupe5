@@ -21,7 +21,7 @@ class UsersController extends AbstractController
         $this->render('registration.php', $vars);
     }
 
-    // Méthode pour créer d'utilisateur
+    // Méthode pour créer un utilisateur
     public function createUser(): void
     {
         $datas = [
@@ -31,6 +31,8 @@ class UsersController extends AbstractController
         $validationMessages = registrationForm::validateFormRegistration();
         if ($validationMessages === true) {
             Model::getInstance()->save('users', $datas);
+            // Après avoir enregistré l'utilisateur avec succès, initialise la session 'connected'
+            $_SESSION['connected'] = true;
             Dispatcher::redirect('indexController', 'index');
         } else {
             foreach ($validationMessages as $message) {

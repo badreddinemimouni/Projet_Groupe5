@@ -15,7 +15,7 @@ class registrationForm
         <label for='confirm-password'>Confirmer le mot de passe</label>
         <input type='password' name='confirm-password' id='confirm-password'>
         <button class='btn btn-lg btn-primary' type='submit' name='submit'>
-            S'enregistrer'
+            S'enregistrer
         </button>
     </form>";
         return $form;
@@ -28,14 +28,15 @@ class registrationForm
         if (!isset($_POST['username']) || strlen($_POST['username']) < 5) {
             $error[] = 'Le nom d\'utilisateur doit comporter 5 caractères';
         }
-        if (!isset($_POST['username']) || strlen($_POST['username']) < 5) {
-            $error[] = 'Le mot de passe doit comporter 5 caractères';
-        }
-
-        if (!isset($_POST['password']) || isset($_POST['confirm-password']) || ($_POST['password'] !== $_POST['confirm-password'])) {
+        // vérifie la présence des deux champs, et vérifie si les deux champs sont vides.
+        if ((!isset($_POST['password']) || empty($_POST['password'])) || (!isset($_POST['confirm-password']) || empty($_POST['confirm-password']))) {
+            $error[] = 'Veuillez entrer un mot de passe et le confirmer';
+        } elseif (strlen($_POST['password']) < 5) {
+            $error[] = 'Le mot de passe doit comporter au moins 5 caractères';
+        } elseif ($_POST['password'] !== $_POST['confirm-password']) {
             $error[] = 'Les mots de passe doivent être identiques';
         }
-
+        
         // Vérification des erreurs
         if (count($error) > 0) {
             return $error; // Retourne les erreurs si elles existent
