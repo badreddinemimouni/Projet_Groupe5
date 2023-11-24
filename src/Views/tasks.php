@@ -23,6 +23,7 @@
         // Pour chaque tâche dans la liste de tâches ($tasks), exécute les instructions suivantes :
         foreach ($tasks as $task) {
             $isAssigned = $userId === $task->getUserId();
+            $userName = Model::getInstance()->getAttributeByAttribute('users', 'login', 'user_id', $task->getUserId());
             // On verifie si l'user de la session est admin du projet ou assigné à la tache pour lui afficher
             if ($isAdmin || $isAssigned) {
                 // Affichage du titre de la tâche en utilisant la méthode getTitle()
@@ -31,7 +32,7 @@
                 // Obtention du libellé de priorité en fonction de la priorité de la tâche
                 $priority = Model::getInstance()->getPriorityLabel($task->getPriority());
                 echo "Priorité : " . $priority->getPriorityValue() . ' <br><br>';
-
+                echo "utilisateur attitré : " . $userName . ' <br><br>';
                 // Obtention du libellé de statut en fonction du statut de la tâche
                 $status = Model::getInstance()->getStatusLabel($task->getStatus());
                 echo "Statut : " . $status->getStatusValue() . ' <br><br>';
