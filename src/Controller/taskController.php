@@ -27,7 +27,7 @@ class TaskController extends AbstractController
         $userId = $_SESSION['user_id'];
         $userAdminId = Model::getInstance()->getAttributeByAttribute('admin', 'id_admin', 'user_id', $userId);
         $project_id = $_POST['project_id'];
-        $projectAdminId = Model::getInstance()->getAttributeByAttribute('project', 'id', 'id_admin', $userAdminId);
+        $projectAdminId = Model::getInstance()->getAttributeByAttribute('project', 'id_admin', 'id', $project_id);
         // Verification que l'user est admin du projet
         if ($userAdminId === $projectAdminId) {
             $validationMessages = taskForm::validateFormTask();
